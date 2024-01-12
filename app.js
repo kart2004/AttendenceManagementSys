@@ -23,15 +23,15 @@ app.set('views', path.join(__dirname, 'views'));
 const loginRoutes = require('./Routes/Login.Routes');
 app.use('/login', loginRoutes);
 
+const registerRoutes = require('./Routes/Register.Routes');
+app.use('/register', registerRoutes);
+
 //Redirect to the login route
 app.get('/', (req, res) => {
     console.log('Redirecting to /login');
     res.redirect('/login');
 });
 
-app.get('/login/teacher', (req, res) => {
-    res.send('Welcome to the Teacher Dashboard');
-});
 
 app.listen(PORT, () => {
     console.log(`Server is running on app http://localhost:${PORT}`);

@@ -14,11 +14,8 @@ db.once('open', () => {
     console.log('Connected to MongoDB database in Login');
 });
 
-
-
 router.get('/', (req, res) => {
     res.render('login');
-    
 });
 
 

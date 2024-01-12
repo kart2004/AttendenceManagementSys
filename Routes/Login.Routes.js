@@ -18,25 +18,20 @@ router.get('/', (req, res) => {
     res.render('login');
 });
 
-
-// Define a route for the /verify endpoint
 router.post('/verify', async (req, res) => {
     const { role, username, password } = req.body;
 
-    // Ensure that the db object is defined
     if (!db) {
         console.error('Internal Server Error: MongoDB connection not established w Login');
         return res.status(500).send('Internal Server Error: MongoDB connection not established w Login');
     }
 
     try {
-        // Ensure that the db object has a 'collection' method before using it
         if (typeof db.collection !== 'function') {
             console.error('Internal Server Error: db.collection is not a function');
             throw new Error('MongoDB connection error: db.collection is not a function');
         }
 
-        // Perform authentication logic using your MongoDB connection
         const usersCollection1 = db.collection('teacher');
         const usersCollection2 = db.collection('student');
         const teacher = await usersCollection1.findOne({ teacher_email: username, teacher_password: password });
@@ -44,7 +39,7 @@ router.post('/verify', async (req, res) => {
         
 
         if (teacher && role=="teacher") {
-            res.redirect('/login/teacher');
+            res.redirect('/teacher');
         }
         else if (student && role=="student") {
             res.redirect('/login/student');
@@ -59,7 +54,6 @@ router.post('/verify', async (req, res) => {
     }
 });
 
-// Define a route for the /teacher endpoint
 router.get('/teacher', (req, res) => {
     res.send('Welcome to the Teacher Dashboard');
 });

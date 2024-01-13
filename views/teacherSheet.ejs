@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance</title>
+    <!-- Add your additional head content here -->
+</head>
+
+<body>
+    <h1>Class Information</h1>
+    <p>Class Name: <%= selectedClass.class_name %></p>
+    <p>Course Teacher: <%= matchingCourse.course_teacher %></p>
+
+    <h2>Attendance Details</h2>
+    <% for (let i = 0; i < studentAttendance.length; i++) { %>
+        <form action="/updateAttendance/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= studentAttendance[i].student_name %>" method="post">
+            <p>Student Name: <%= studentAttendance[i].student_name %></p>
+            <p>Student History: <%= studentAttendance[i].student_history.join(', ') %></p>
+            <label for="attendance">Most Recent Attendance (0 or 1):</label>
+            <input type="number" id="attendance" name="attendance" min="0" max="1" required>
+            <button type="submit">Update Attendance</button>
+            <p>Student Cumulative: <%= studentAttendance[i].student_cumulative %></p>
+            <hr>
+        </form>
+    <% } %>
+
+    <!-- Add your additional content here -->
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
+  <title>Teacher Page</title>
 </head>
 
 <style>
@@ -82,40 +82,32 @@
 </style>
 
 <body>
-
-  <h1>Applied Digital Logic Design and Computer Organization</h1><hr>
-  <h2><br>Classes Available:</h2>
-
-  <div class="dropdown-container">
-    <div class="dropdown" id="csADropdown">
-      <button>CS-B</button>
-      <div class="dropdown-content">
-        <a href="#">Attendance</a>
-        <a href="#">CIE</a>
-        <a href="#">Report</a>
-      </div>
-    </div>
-
-    <div class="dropdown" id="isADropdown">
-      <button>IS-A</button>
-      <div class="dropdown-content">
-        <a href="#">Attendance</a>
-        <a href="#">CIE</a>
-        <a href="#">Report</a>
-      </div>
-    </div>
-
-    <div class="dropdown" id="btADropdown">
-      <button>BT-A</button>
-      <div class="dropdown-content">
-        <a href="#">Attendance</a>
-        <a href="#">CIE</a>
-        <a href="#">Report</a>
-      </div>
-    </div>
-  </div>
   <br><br>
-  <h3>Teacher Details:<br><br>Dr. Badari Nath K<br> badarinathk@rvce.edu.in<br>98364 37438<br> </h3>
+  <% if (teacher) { %>
+    <h3>Teacher Details:<br><br>
+        <h1><%= teacher.teacher_fullName %></h1><br>
+        <h2><%= teacher.teacher_email %></h2><br>
+        <h2><%= teacher.teacher_dept %></h2><br>
+        <!-- Add other fields as needed -->
+    </h3>
+    <% if (teacher.teacher_classes && teacher.teacher_classes.length > 0) { %>
+        <h2>Teacher Classes:</h2>
+        <% teacher.teacher_classes.forEach(function (classItem) { %>
+            <div class="dropdown-container">
+                <div class="dropdown">
+                    <button><%= classItem.class_name %></button>
+                    <div class="dropdown-content">
+                        <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>">Attendance</a>
+                        <a>Course: <%= classItem.course_name %></a>
+                        <a>Course Code: <%= classItem.course_code %></a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    <% } %>
+<% } else { %>
+    <p>Teacher not found.</p>
+<% } %>
 
 </body>
 

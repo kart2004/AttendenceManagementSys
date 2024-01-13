@@ -39,7 +39,8 @@ router.post('/verify', async (req, res) => {
         
 
         if (teacher && role=="teacher") {
-            res.redirect('/teacher');
+            console.log(`Redirecting to /teacher?teacher_id=${teacher.teacher_id}`);
+            res.redirect(`/teacher?teacher_id=${teacher.teacher_id}`);
         }
         else if (student && role=="student") {
             res.redirect('/student');
@@ -53,13 +54,5 @@ router.post('/verify', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-router.get('/teacher', (req, res) => {
-    res.send('Welcome to the Teacher Dashboard');
-});
-router.get('/student', (req, res) => {
-    res.send('Welcome to the Student Dashboard');
-});
-
 
 module.exports = router;

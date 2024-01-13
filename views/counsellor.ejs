@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+</head>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7fb;
+    margin: 0;
+    padding-bottom: 160px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  hr {
+    border: 2px solid #ddd;
+  }
+
+  h1 {
+    font-size: 35px;
+    margin-left: 25px;
+  }
+
+  h2 {
+    margin-left: 25px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .button-container {
+    display: flex;
+    margin-left: 25px;
+    margin-bottom: 35px;
+  }
+
+  .button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 20px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 20px;
+  }
+
+  h3 {
+    margin-left: 25px;
+  }
+</style>
+
+<body>
+
+  <h1>Prof. Ganashree K</h1>
+  <hr>
+  <h2><br>Counseling batch:<br>CSE B2</h2>
+
+  <div class="button-container">
+    <button class="button" onclick="handleButtonClick('Attendance')">Attendance</button>
+    <button class="button" onclick="handleButtonClick('CIE')">CIE</button>
+    <button class="button" onclick="handleButtonClick('Report')">Report</button>
+  </div>
+  <br><br>
+  <h3>Teacher Details:<br><br>Prof. Ganashree K<br> ganashreek@rvce.edu.in<br>98364 37438<br> </h3>
+
+  <script>
+    function handleButtonClick(batch) {
+      
+      console.log('Button clicked for batch:', batch);
+      
+    }
+  </script>
+
+</body>
+
+</html>

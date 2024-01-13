@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const bodyParser = require('body-parser');
 
 const MONGO_URI = 'mongodb+srv://nithya3169:bcn8gMcHRRVqtW7E@clusteratms.ms3h1yl.mongodb.net/?retryWrites=true&w=majority'; 
 
@@ -13,7 +14,10 @@ db.once('open', () => {
     console.log('Connected to MongoDB database');
 });
 
-router.get('/:class_name/:course_teacher', async (req, res) => {
+router.use(bodyParser.json());
+
+
+/*router.get('/:class_name/:course_teacher', async (req, res) => {
     const class_name = req.params.class_name;
     const course_teacher = req.params.course_teacher;
 
@@ -36,7 +40,7 @@ router.get('/:class_name/:course_teacher', async (req, res) => {
         console.error('Error fetching class details:', error);
         res.status(500).send('Internal Server Error');
     }
-});
+}); */
 
 router.post('/updateAttendance/:class_name/:course_teacher/:student_name', async (req, res) => {
     const class_name = req.params.class_name;

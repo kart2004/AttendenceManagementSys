@@ -44,8 +44,8 @@ app.use('/attendance', AttendanceRoutes);
 const CounsellorRoutes = require('./Routes/Counsellor.Routes');
 app.use('/counsellor', CounsellorRoutes);
 
-const teachsheetRoutes = require('./Routes/teacherSheet.Routes');
-app.use('/updateAttendance/:class_name/:course_teacher/:student_name', teachsheetRoutes);
+//const teachsheetRoutes = require('./Routes/teacherSheet.Routes');
+//app.use('/updateAttendance', teachsheetRoutes);
 
 
 app.get('/', (req, res) => {

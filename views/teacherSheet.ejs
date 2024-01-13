@@ -15,7 +15,7 @@
 
     <h2>Attendance Details</h2>
     <% for (let i = 0; i < studentAttendance.length; i++) { %>
-        <form action="/updateAttendance/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= studentAttendance[i].student_name %>" method="post">
+        <form action="http://localhost:4000/attendance/updateAttendance/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= studentAttendance[i].student_name %>" method="post">
             <p>Student Name: <%= studentAttendance[i].student_name %></p>
             <p>Student History: <%= studentAttendance[i].student_history.join(', ') %></p>
             <label for="attendance">Most Recent Attendance (0 or 1):</label>

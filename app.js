@@ -32,6 +32,9 @@ app.use('/register', registerRoutes);
 const teacherRoutes = require('./Routes/Teacher.Routes');
 app.use('/teacher', teacherRoutes);
 
+const studentRoutes = require('./Routes/Student.Routes');
+app.use('/student', studentRoutes);
+
 app.get('/', (req, res) => {
     console.log('Redirecting to /home');
     res.redirect('/home');

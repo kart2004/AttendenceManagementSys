@@ -70,13 +70,17 @@ router.post('/updateAttendance/:className/:courseTeacher/:studentName', async (r
             return res.status(404).json({ message: 'Student not found.' });
         }
 
-       // Update the attendance logic here
-student.student_history.push(parseInt(newAttendance, 10));
+// Update the attendance logic here
+        // Convert the newAttendance to 'P' for present or 'A' for absent
+        const attendanceMark = newAttendance === 'present' ? 'P' : 'A';
+        
+        student.student_history.push(attendanceMark);
 
-// Trim the history to keep only the last 5 entries
-if (student.student_history.length > 5) {
-    student.student_history.shift(); // Remove the leftmost (oldest) entry
-}
+        // Trim the history to keep only the last 5 entries
+        if (student.student_history.length > 5) {
+            student.student_history.shift(); // Remove the leftmost (oldest) entry
+        }
+
 await usersCollection1.updateOne(
             {
                 class_name: classId,

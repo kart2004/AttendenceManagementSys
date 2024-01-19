@@ -43,7 +43,8 @@ router.post('/verify', async (req, res) => {
             res.redirect(`/teacher?teacher_id=${teacher.teacher_id}`);
         }
         else if (student && role=="student") {
-            res.redirect('/student');
+            console.log(`Redirecting to /student?student_id=${student.student_id}`);
+            res.redirect(`/student?student_id=${student.student_id}`);
         } else {
             console.error('Authentication failed: Invalid username or password');
             res.status(401).json({ message: 'Invalid username or password.' });

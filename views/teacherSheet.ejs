@@ -87,6 +87,14 @@
             </td>
           </tr>
         <% } %>
+        <tr>
+            <td colspan="9" class="text-end">
+              <form action="http://localhost:4000/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
+                <label for="attendance">New Session: </label>
+                <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green;">New Session</button>
+              </form>
+            </td>
+          </tr>
       </tbody>
       
 </body>

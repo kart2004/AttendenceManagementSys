@@ -71,33 +71,16 @@ router.post('/updateAttendance/:className/:courseTeacher/:studentName', async (r
         }
 
        // Update the attendance logic here
-student.student_history.push(parseInt(newAttendance, 10));
+       student.student_history.unshift(parseInt(newAttendance, 10));
+       if (student.student_history.length > 5) {
+           student.student_history.pop(); // Remove the last entry
+       }
 
-// Trim the history to keep only the last 5 entries
-if (student.student_history.length > 5) {
-    student.student_history.shift(); // Remove the leftmost (oldest) entry
-}
-await usersCollection1.updateOne(
-            {
-                class_name: classId,
-                'class_courses.course_teacher': courseTeacher,
-                'class_courses.course_attendance.student_name': studentName
-            },
-            {
-                $push: {
-                    'class_courses.$[course].course_attendance.$[stu].student_history': {
-                        $each: [parseInt(newAttendance, 10)],
-                        $slice: -5 // Keep only the last 5 entries
-                    }
-                }
-            },
-            {
-                arrayFilters: [
-                    { 'course.course_teacher': courseTeacher },
-                    { 'stu.student_name': studentName }
-                ]
-            }
-        );
+       await usersCollection1.updateOne(
+        { class_name: classId, 'class_courses.course_teacher': courseTeacher, 'class_courses.course_attendance.student_name': studentname },
+        { $set: { 'class_courses.$[course].course_attendance.$[stu].student_history': student.student_history } },
+        { arrayFilters: [{ 'course.course_teacher': courseTeacher }, { 'stu.student_name': studentname }] }
+    );
         res.render('teacherSheet', {
             selectedClass,
             matchingCourse,

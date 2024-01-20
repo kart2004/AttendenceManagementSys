@@ -41,13 +41,6 @@ app.use('/admin', adminRoutes);
 const AttendanceRoutes = require('./Routes/Attendance.Routes');
 app.use('/attendance', AttendanceRoutes);
 
-const CounsellorRoutes = require('./Routes/Counsellor.Routes');
-app.use('/counsellor', CounsellorRoutes);
-
-//const teachsheetRoutes = require('./Routes/teacherSheet.Routes');
-//app.use('/updateAttendance', teachsheetRoutes);
-
-
 app.get('/', (req, res) => {
     console.log('Redirecting to /home');
     res.redirect('/home');

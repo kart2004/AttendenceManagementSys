@@ -34,18 +34,23 @@ router.post('/verify', async (req, res) => {
 
         const usersCollection1 = db.collection('teacher');
         const usersCollection2 = db.collection('student');
+        const usersCollection3 = db.collection('admin');
         const teacher = await usersCollection1.findOne({ teacher_email: username, teacher_password: password });
         const student = await usersCollection2.findOne({ student_email: username, student_password: password });
+        const admin = await usersCollection3.findOne({ admin_email: username, admin_password: password });
         
 
         if (teacher && role=="teacher") {
             console.log(`Redirecting to /teacher?teacher_id=${teacher.teacher_id}`);
             res.redirect(`/teacher?teacher_id=${teacher.teacher_id}`);
-        }
-        else if (student && role=="student") {
+        } else if (student && role=="student") {
             console.log(`Redirecting to /student?student_id=${student.student_id}`);
             res.redirect(`/student?student_id=${student.student_id}`);
-        } else {
+        } else if (admin && role=="admin") {
+            console.log(`Redirecting to /admin?admin_id=${admin.admin_id}`);
+            res.redirect(`/admin?admin_id=${admin.admin_id}`);
+        }
+        else {
             console.error('Authentication failed: Invalid username or password');
             res.status(401).json({ message: 'Invalid username or password.' });
         }

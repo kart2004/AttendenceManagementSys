@@ -59,8 +59,10 @@
               <tbody>
                   <% selectedCourse.course_attendance.forEach(attendance => { %>
                       <% const studentName = attendance.student_name; %>
-                      <% const matchingStudent = selectedClass.class_students_usn.find(student => student.student_fullname === studentName); %>
-                    <% const studentUSN = matchingStudent ? matchingStudent.student_id : 'N/A'; %>
+                      <% const matchingStudent = selectedClass.class_students_usn.find(student => student.student_fullName === studentName); %>
+                      <% console.log('Matching Student:', matchingStudent); %>
+                      <% const studentUSN = matchingStudent ? matchingStudent.student_id : 'N/A'; %>
+                      <% console.log('Student USN:', studentUSN); %>
                       <% const studentHistory = attendance.student_history; %>
                       <% const courseCumulative = selectedCourse.course_cumulative; %>
                       <% const studentCumulative = (attendance.student_cumulative / courseCumulative * 100).toFixed(2) + '%'; %>

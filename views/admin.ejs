@@ -12,12 +12,12 @@
     />
   </head>
   <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger">
-    <nav class="navbar fixed-top bg-body-tertiary">
-      <div class="container-fluid" style="text-align: center">
-        <h3>Attendance Management Sytem</h3>
-      </div>
-    </nav>
-
+<nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+  <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+    <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+    Attendance Management Sytem
+  </a>
+</nav>
     <div class="row" style="padding-left:10px;padding-top:65px">
       <div class="col-4" style="padding-right: 85px">
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
@@ -34,9 +34,9 @@
               <p class="card-text"></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Admin ID: <%= admin.admin_id %></li>
-                <li class="list-group-item">Admin email: <%= admin.admin_email %></li>
-                <li class="list-group-item">Admin Department: <%= admin.admin_dept %></li>
+                <li class="list-group-item"><b>Admin ID:</b> <%= admin.admin_id %></li>
+                <li class="list-group-item"><b>Admin email:</b> <%= admin.admin_email %></li>
+                <li class="list-group-item"><b>Admin Department:</b> <%= admin.admin_dept %></li>
             </ul>
           </div>
         </div>

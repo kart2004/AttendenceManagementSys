@@ -11,39 +11,48 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger">
-    <nav class="navbar fixed-top bg-body-tertiary">
-      <div class="container-fluid" style="text-align: center">
-        <h3>Attendance Management Sytem</h3>
-      </div>
+  <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger" style = "background-color: lightpink;">
+    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+        Attendance Management Sytem
+      </a>
     </nav>
     
-    <div
-      class="row"
-      style="padding-top: 50px; padding-left: 15px; padding-right: 15px"
-    >
-    <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <li style="list-style-type: none; font-weight: bold">Admin Name: <%= admin.admin_fullName %></li>
-        <hr />
-        <li style="list-style-type: none; font-weight: bold">Department: <%= admin.admin_dept %></li>
-        <hr />
-        <li style="list-style-type: none; font-weight: bold">Class: <%= classId %></li>
-        <hr />
-        <li style="list-style-type: none; font-weight: bold">
-          Courses:
-          <% for (const course of selectedClass.class_courses) { %>
-              <a 
-                href="/admin/sheet?admin=<%= admin.admin_id %>&class_name=<%= selectedClass.class_name %>&course_code=<%= course.course_code %>"
-                class="btn btn-danger" 
-                style="margin-right: 20px; margin-left: 20px; width: 300px"
-            >
-                <%= course.course_name %>
-              </a>
-          <% } %>
-      </li>
+    <div class="row" style="padding-top: 60px; padding-left: 15px; padding-right: 15px">
+      <h2 style = "font-variant: small-caps; padding-bottom: 1.6%; text-decoration:underline;"><%= classId %> Details</h2>
+      <div class="col-3" style="padding-right: 15px">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded" >
+          <ul class="list-group list-group-flush">
+
+          <li style="list-style-type: none;"><b>Admin Name: </b><%= admin.admin_fullName %></li>
+          <hr />
+          <li style="list-style-type: none;"><b>Department: </b><%= admin.admin_dept %></li>
+          <hr />
+          <li style="list-style-type: none;"><b>Class: </b><%= classId %></li>
+          </ul>
+        </div>
+        </div>
+
+      <div class="col-8" style="padding-right: 15px">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+
+          <li style="list-style-type: none; text-align: center;">
+            <b>Courses: </b> <br>
+            <% for (const course of selectedClass.class_courses) { %>
+                <a 
+                  href="/admin/sheet?admin=<%= admin.admin_id %>&class_name=<%= selectedClass.class_name %>&course_code=<%= course.course_code %>"
+                  class="btn btn-danger" 
+                  style="margin: 10px 20px; padding: 10px; width: 300px; background-color:darksalmon ; color:black; font-weight: 600;"
+              >
+                  <%= course.course_name %>
+                </a>
+            <% } %>
+          </li>
+        </div>
+      </div>
     </div>
-    </div>
-    <h1 style="text-align: center; padding-bottom: 0px">Student Attendance</h1>
+    <h2 style="text-align: center; padding-bottom: 0px">Student Attendance</h2>
     <hr />
     <div class="row" style="padding-left: 15px; padding-right: 15px">
       <div class="shadow p-3 mb-5 bg-body-tertiary rounded">

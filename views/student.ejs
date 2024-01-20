@@ -19,10 +19,11 @@
   </head>
   <body class="p-3 mb-2 bg-info-subtle text-emphasis-info">
 
-    <nav class="navbar fixed-top bg-body-tertiary" >
-      <div class="container-fluid" style="text-align: center;">
-        <h3>Attendance Management Sytem</h3>
-      </div>
+    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+        Attendance Management Sytem
+      </a>
     </nav>
 
     <div class="row" style="padding-left:10px;padding-top:65px">
@@ -56,11 +57,11 @@
                   <thead>
                       <tr>
                           <th scope="col" style="width:10%">Course</th>
-                          <th scope="col" style="width:5%">Course Code</th>
-                          <th scope="col" style="width:7%">Professor</th>
-                          <th scope="col" colspan="6"  style="width:8%">Last 5 days</th>
-                          <th scope="col" style="width:8%">Cumulative bar</th>
-                          <th scope="col" style="width:8%">Cumulative</th>
+                          <th scope="col" style="width:5%; ">Course Code</th>
+                          <th scope="col" style="width:7%; text-align: center;">Professor</th>
+                          <th scope="col" colspan="6"  style="width:8%; text-align: center;">Last 5 days</th>
+                          <th scope="col" style="width:8%; text-align: center;">Cumulative</th>
+                          <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -84,14 +85,14 @@
                                       <% } %>
                                   <% } %>
                               </td>
+                              <td style = "text-align: center;"><%= studentAttendance ?(studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) + '%' + '    [ ' + studentAttendance.student_cumulative + '/' + course.course_cumulative + ' ]' : 'N/A' %></td>
                               <td>
                                   <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="<%= studentAttendance ? studentAttendance.student_cumulative : 0 %>" aria-valuemin="0" aria-valuemax="<%= course.course_cumulative %>">
-                                    <div class="progress-bar progress-bar-striped bg-info" style="background-color: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#cc0000' : 'black' %>
+                                    <div class="progress-bar progress-bar-striped bg-info" style="background-color: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' : 'black' %>
                                      !important; 
                                      width: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2): 0 %>%;"></div>
                                   </div>
                               </td>
-                              <td><%= studentAttendance ?(studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) + '%' + '    [ ' + studentAttendance.student_cumulative + '/' + course.course_cumulative + ' ]' : 'N/A' %></td>
                           </tr>
                       <% } %>
                   </tbody>

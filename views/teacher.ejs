@@ -5,17 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Page</title>
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 </head>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7fb;
-    margin: 0;
-    padding-bottom: 160px;
-    box-sizing: border-box;
-    position: relative;
-  }
   hr{
     border: 2px solid #ddd;
   }
@@ -81,34 +79,85 @@
   }
 </style>
 
-<body>
-  <br><br>
-  <% if (teacher) { %>
-    <h3>Teacher Details:<br><br>
-        <h1><%= teacher.teacher_fullName %></h1><br>
-        <h2><%= teacher.teacher_email %></h2><br>
-        <h2><%= teacher.teacher_dept %></h2><br>
-        <!-- Add other fields as needed -->
-    </h3>
-    <% if (teacher.teacher_classes && teacher.teacher_classes.length > 0) { %>
-        <h2>Teacher Classes:</h2>
-        <% teacher.teacher_classes.forEach(function (classItem) { %>
-            <div class="dropdown-container">
-                <div class="dropdown">
-                    <button><%= classItem.class_name %></button>
-                    <div class="dropdown-content">
-                        <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>">Attendance</a>
-                        <a>Course: <%= classItem.course_name %></a>
-                        <a>Course Code: <%= classItem.course_code %></a>
-                    </div>
-                </div>
-            </div>
-        <% }); %>
-    <% } %>
-<% } else { %>
-    <p>Teacher not found.</p>
-<% } %>
+<body class="p-3 mb-2 bg-success-subtle text-emphasis-success">
+  <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+    <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+      <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+      Attendance Management Sytem
+    </a>
+  </nav>
 
+  <div class="row" style="padding-left:10px;padding-top:65px">
+    <div class="col-4" style="padding-right: 85px">
+      <div
+        class="shadow p-3 mb-5 bg-body-tertiary rounded"
+        style="padding-top: 150px"
+      >
+        <div class="card" >
+          <img
+            src="https://images.assetsdelivery.com/compings_v2/juliatim/juliatim1607/juliatim160700013.jpg"
+            class="card-img-top mx-auto d-block"
+            style="height: 3%; "
+          />
+          <div class="card-body">
+            <% if (teacher) { %>
+            <h5 class="card-title" style="padding-top: 5px">
+              Professor Name: <%= teacher.teacher_fullName %> 
+            </h5>
+            <p class="card-text"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Professor ID:</b> <%= teacher.teacher_id %></li>
+            <li class="list-group-item"><b>Professor email:</b> <%= teacher.teacher_email %></li>
+            <li class="list-group-item"><b>Professor Department:</b> <%= teacher.teacher_dept %></li>
+          </ul>
+          <% } else { %>
+            <p>Teacher not found.</p>
+        <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="col-8" style="padding-left: 5px">
+      <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+        <% if (teacher && teacher.teacher_classes && teacher.teacher_classes.length > 0) { %>
+        <div class = "row row-cols-3" style="padding-left: 2%;">
+        
+          <% teacher.teacher_classes.forEach(function (classItem) { %>
+        
+          <div class="card mb-3" style="width: 18rem; margin-right: 10px;margin-left: 10px;">
+            <div class="card-body" >
+              <h5 class="card-title"><%= classItem.class_name %></h5>
+              <p class="card-text">Take Attendance</p>
+              <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>" class="btn btn-outline-success">Go to Class</a>
+            </div>
+          </div>
+        <% }); %>
+
+
+        </div>
+        <% } else { %>
+          <p>Teacher not found.</p>
+        <% } %>
+
+      </div>
+
+    </div>
+
+<script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
 </body>
 
 </html>

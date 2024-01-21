@@ -12,18 +12,18 @@
     />
   </head>
   <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger">
-<nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
-  <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-    <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
-    Attendance Management Sytem
-  </a>
-</nav>
+    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+        Attendance Management Sytem
+      </a>
+    </nav>
     <div class="row" style="padding-left:10px;padding-top:65px">
       <div class="col-4" style="padding-right: 85px">
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-          <div class="card" style="width: 18rem">
+          <div class="card">
             <img
-              src="https://img.freepik.com/premium-vector/boy-student-graduate-cap-icon-sign-logo-color-isolated-image-circle-isolated-vector-illustration_619989-1110.jpg"
+              src="https://cdn-icons-png.flaticon.com/512/265/265671.png"
               class="card-img-top"
               style="height: 275px; width: 275px"
             />
@@ -44,23 +44,22 @@
    
       <div class="col-8" style="padding-left: 0px">
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px;">
+          <div class="row row-cols-3" style="padding-left: 2%;">
             
             <% admin.admin_classes.forEach(class_name => { %>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
+                      <div class="card mb-3" style="width: 18rem; margin-right: 10px;margin-left: 10px;">
+                          <div class="card-body">
                                 <h5 class="card-title"><%= class_name %></h5>
-                                <a href="/admin/class?admin=<%= admin.admin_id %>&class_name=<%= class_name %>" class="btn btn-primary"><%= class_name %></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
+                                <p class="card-text">Monitor attendance</p>
+                                <a href="/admin/class?admin=<%= admin.admin_id %>&class_name=<%= class_name %>" class="btn btn-outline-danger">Go to class</a>
+                          </div>
+                      </div>
             <% }); %>
-            
+          </div>
         </div>
+      </div>
     </div>
+    
     
 
     <script

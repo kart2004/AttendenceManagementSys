@@ -121,6 +121,8 @@ router.post('/updateAllAttendances/:className/:courseTeacher', async (req, res) 
             return res.status(404).json({ message: 'Course not found.' });
         }
 
+        const course_id = 
+
         // Update attendance for all students in the course
         matchingCourse.course_attendance.forEach(student => {
             // Update the attendance logic here
@@ -134,7 +136,8 @@ router.post('/updateAllAttendances/:className/:courseTeacher', async (req, res) 
         // Save the updated class back to the database
         await usersCollection1.updateOne(
             { class_name: classId, 'class_courses.course_teacher': courseTeacher },
-            { $set: { 'class_courses.$[course].course_attendance': matchingCourse.course_attendance } },
+            { $set: { 'class_courses.$[course].course_attendance': matchingCourse.course_attendance,
+            'class_courses.$[course].course_cumulative': matchingCourse.course_cumulative } },
             { arrayFilters: [{ 'course.course_teacher': courseTeacher }] }
         );
 

@@ -45,7 +45,7 @@ router.post('/verify', async (req, res) => {
                 );
                 if (result.modifiedCount > 0) {
                     console.log('Password updated successfully.');
-                    return res.status(200).json({ message: 'Password updated successfully.' });
+                    return res.redirect('/login');
                 } else {
                     console.error('Authentication failed: Invalid username or password');
                     return res.status(401).json({ message: 'Invalid username or password.' });
@@ -58,7 +58,20 @@ router.post('/verify', async (req, res) => {
                 );
                 if (result.modifiedCount > 0) {
                     console.log('Password updated successfully.');
-                    return res.status(200).json({ message: 'Password updated successfully.' });
+                    return res.redirect('/login');
+                } else {
+                    console.error('Authentication failed: Invalid username or password');
+                    return res.status(401).json({ message: 'Invalid username or password.' });
+                }
+            }   if (role=='admin'){
+                const collection = db.collection('admin');
+                const result = await collection.updateOne(
+                    { admin_email: username, admin_password: password },
+                    { $set: { admin_password: new_password, admin_isVerified: true } }
+                );
+                if (result.modifiedCount > 0) {
+                    console.log('Password updated successfully.');
+                    return res.redirect('/login');
                 } else {
                     console.error('Authentication failed: Invalid username or password');
                     return res.status(401).json({ message: 'Invalid username or password.' });

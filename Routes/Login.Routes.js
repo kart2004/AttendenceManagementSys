@@ -41,12 +41,24 @@ router.post('/verify', async (req, res) => {
         
 
         if (teacher && role=="teacher") {
+            if (teacher.teacher_isVerified === false) {
+                console.log('Redirecting to registration page for teacher.');
+                return res.redirect('/register');
+            }
             console.log(`Redirecting to /teacher?teacher_id=${teacher.teacher_id}`);
             res.redirect(`/teacher?teacher_id=${teacher.teacher_id}`);
         } else if (student && role=="student") {
+            if (student.student_isVerified === false) {
+                console.log('Redirecting to registration page for student.');
+                return res.redirect('/register');
+            }
             console.log(`Redirecting to /student?student_id=${student.student_id}`);
             res.redirect(`/student?student_id=${student.student_id}`);
         } else if (admin && role=="admin") {
+            if (admin.admin_isVerified === false) {
+                console.log('Redirecting to registration page for admin.');
+                return res.redirect('/register');
+            }        
             console.log(`Redirecting to /admin?admin_id=${admin.admin_id}`);
             res.redirect(`/admin?admin_id=${admin.admin_id}`);
         }

@@ -94,7 +94,7 @@ router.post('/updateAttendance/:className/:courseTeacher/:studentName', async (r
             selectedClass,
             matchingCourse,
             studentAttendance: matchingCourse.course_attendance
-        });
+        }); 
     } catch (error) {
         console.error('Error updating attendance:', error);
         return res.status(500).send('Internal Server Error');
@@ -119,9 +119,7 @@ router.post('/updateAllAttendances/:className/:courseTeacher', async (req, res) 
         const matchingCourse = selectedClass.class_courses.find(course => course.course_teacher === courseTeacher);
         if (!matchingCourse) {
             return res.status(404).json({ message: 'Course not found.' });
-        }
-
-        const course_id = 
+        } 
 
         // Update attendance for all students in the course
         matchingCourse.course_attendance.forEach(student => {

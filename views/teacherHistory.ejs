@@ -54,7 +54,6 @@
                     <th scope="col" style="text-align: left;">Student Name</th>
                     <th scope="col" style="text-align: left;">Student USN</th>
                     <% const lastDates = matchingCourse.course_dates; %>
-                    <% lastDates.reverse(); %>
                     <% lastDates.forEach(date => { %>
                         <th scope="col" style="text-align: left;">
                             <%= date %>
@@ -72,7 +71,6 @@
               <td style = "text-align: left;"><%= studentAttendance[i].student_usn %></td>
               <%
                 const last5Dates = matchingCourse.course_dates;
-                last5Dates.reverse();
                 last5Dates.forEach(date => {
                     const isAbsent = studentAttendance[i].student_absent_dates.includes(date);
                 %>
@@ -82,6 +80,25 @@
                 <%
                 });
                 %>
+                <td><div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Warning striped example"
+                  aria-valuenow="<%= studentAttendance[i].student_cumulative %>"
+                  aria-valuemin="0"
+                  aria-valuemax="<%= matchingCourse.course_cumulative %>"
+                >
+                  <div
+                    class="progress-bar progress-bar-striped bg-warning"
+                    style="width: <%= studentCumulative %>; color: black;
+                    background-color: <%= (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' %>
+                                  !important; "
+                  >
+                  <%= studentCumulative %>
+                  </div>
+                </div></td>
+  
+                  <td style = "text-align: center;"><%= studentCumulative + '      [ ' + studentAttendance[i].student_cumulative + '/' + matchingCourse.course_cumulative + ' ]'%></td>  
             </tr>
             <% } %>
         </tbody>

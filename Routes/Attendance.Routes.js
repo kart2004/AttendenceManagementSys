@@ -150,6 +150,34 @@ router.post('/updateAllAttendances/:className/:courseTeacher', async (req, res) 
     }
 });
 
+router.post('/updateHistory/:className/:courseTeacher', async (req, res) => {
+    const classId = req.params.className;
+    const courseTeacher = req.params.courseTeacher;
+
+    try {
+        const usersCollection1 = db.collection('classes');
+        const selectedClass = await usersCollection1.findOne({ class_name: classId });
+
+        if (!selectedClass) {
+            return res.status(404).json({ message: 'Class not found.' });
+        }
+        const matchingCourse = selectedClass.class_courses.find(course => course.course_teacher === courseTeacher);
+        if (!matchingCourse) {
+            return res.status(404).json({ message: 'Course teacher not found for the specified class.' });
+        }
+
+        // Render the attendance page with the selected class data
+        res.render('teacherHistory', {
+            selectedClass,
+            matchingCourse,
+            studentAttendance: matchingCourse.course_attendance
+        });
+    } catch (error) {
+        console.error('Error fetching class details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 
 

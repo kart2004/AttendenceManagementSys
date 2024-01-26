@@ -127,8 +127,10 @@
           <div class="card mb-3" style="width: 18rem; margin-right: 10px;margin-left: 10px;">
             <div class="card-body" >
               <h5 class="card-title"><%= classItem.class_name %></h5>
-              <p class="card-text">Take Attendance</p>
-              <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>" class="btn btn-outline-success">Go to Class</a>
+              <p class="card-text">Class details</p>
+              <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>" class="btn btn-outline-success">Attendance</a>
+              <a href="http://localhost:4000/teacher/cie" class="btn btn-outline-success">CIE</a>
+              <a href="http://localhost:4000/teacher/report" class="btn btn-outline-success">Report</a>
             </div>
           </div>
         <% }); %>

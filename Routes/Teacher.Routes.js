@@ -40,4 +40,18 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/cie', async (req, res) => {
+    
+    console.error('Authentication failed: Currently unavailable, Can view attendance');
+    res.status(401).json({ message: 'Currently unavailable, Can view attendance.' });
+       
+});
+
+router.get('/report', async (req, res) => {
+    
+    console.error('Authentication failed: Currently unavailable, Can view attendance');
+    res.status(401).json({ message: 'Currently unavailable, Can view attendance.' });
+       
+});
+
 module.exports = router;

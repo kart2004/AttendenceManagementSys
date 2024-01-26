@@ -52,8 +52,10 @@ router.post('/verify', async (req, res) => {
                 console.log('Redirecting to registration page for student.');
                 return res.redirect('/register');
             }
-            console.log(`Redirecting to /student?student_id=${student.student_id}`);
-            res.redirect(`/student?student_id=${student.student_id}`);
+            // console.log(`Redirecting to /student?student_id=${student.student_id}`);
+            // res.redirect(`/student?student_id=${student.student_id}`);
+            console.log(`Redirecting to /studentDash?student_id=${student.student_id}`)
+            res.redirect(`/studentDash?student_id=${student.student_id}`)
         } else if (admin && role=="admin") {
             if (admin.admin_isVerified === false) {
                 console.log('Redirecting to registration page for admin.');

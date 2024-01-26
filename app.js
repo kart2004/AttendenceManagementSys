@@ -33,6 +33,9 @@ app.use('/register', registerRoutes);
 const teacherRoutes = require('./Routes/Teacher.Routes');
 app.use('/teacher', teacherRoutes);
 
+const studentDashRoutes = require('./Routes/StudentDash.Routes');
+app.use('/studentDash', studentDashRoutes);
+
 const studentRoutes = require('./Routes/Student.Routes');
 app.use('/student', studentRoutes);
 

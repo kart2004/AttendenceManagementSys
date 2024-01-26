@@ -18,7 +18,24 @@
 
     <title>Student Attendance</title>
     <!-- Add your additional head content here -->
-
+<script type="text/javascript">
+    function changeBorderColor() {
+      console.log("here")
+      var selects = document.getElementsByClassName("customSelect");
+      console.log(selects)
+      for (let select of selects) {
+        console.log(select)
+        
+        var selectedOption = select.options[select.selectedIndex];
+  
+        if (selectedOption.value === "1") {
+          select.style.borderColor = "#28a745"; // Green border for 'P'
+        } else {
+          select.style.borderColor = "#dc3545"; // Red border for 'A'
+        }
+    }
+    }
+  </script>
 </head>
 
 <body class="p-3 mb-2 bg-success-subtle text-emphasis-success">
@@ -124,11 +141,11 @@
                   <option value = "0">A</option>
                 </select> -->
                 <% value = 1 %>
-                  <select name="<%= studentAttendance[i].student_usn %>" class="form-select" aria-label="Default select example" style=" width: 70px;
-                      border-color:black;
+                  <select name="<%= studentAttendance[i].student_usn %>" class="customSelect" aria-label="Default select example" style=" width: 70px;
+                      border-color:green;
                       border-width: 3.5px;
                       padding-bottom: 2px; "
-                    id="<%= studentAttendance[i].student_usn %>"
+                    
                     onchange="changeBorderColor()"
                   >
                     <option
@@ -163,18 +180,6 @@
     </div>
 
   </form>
-  <!-- <script>
-    function changeBorderColor() {
-      var select = document.getElementById("customSelect");
-      var selectedOption = select.options[select.selectedIndex];
-
-      if (selectedOption.value === "1") {
-        select.style.borderColor = "#28a745"; // Green border for 'P'
-      } else {
-        select.style.borderColor = "#dc3545"; // Red border for 'A'
-      }
-    }
-  </script> -->
 </body>
 
 

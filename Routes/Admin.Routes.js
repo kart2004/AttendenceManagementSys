@@ -124,4 +124,44 @@ router.get('/report', async (req, res) => {
     res.status(401).json({ message: 'Currently unavailable, Can view attendance.' });
        
 });
+
+router.post('/history/:admin/:class_name/:course_code', async (req, res) => {
+    const adminName = req.params.admin;
+    const classId = req.params.class_name;
+    const courseCode = req.params.course_code;
+
+    try {
+        const usersCollection1 = db.collection('classes');
+        const selectedClass = await usersCollection1.findOne({ class_name: classId });
+        console.log({ class_name: classId });
+
+        if (!selectedClass) {
+            return res.status(404).json({ message: 'Class not found.' });
+        }
+
+        const selectedCourse = selectedClass.class_courses.find(course => course.course_code === courseCode);
+
+        if (!selectedCourse) {
+            return res.status(404).json({ message: 'Course not found in the class.' });
+        } 
+        const usersCollection2 = db.collection('admin');
+        const admin = await usersCollection2.findOne({ admin_id: adminName });
+
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found.' });
+        }
+
+        // Render the attendance page with the selected class data
+        res.render('adminHistory', {
+            admin,
+            classId,
+            selectedClass,
+            selectedCourse
+            // Pass other necessary data from the database
+        });
+    } catch (error) {
+        console.error('Error fetching class details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 module.exports = router;

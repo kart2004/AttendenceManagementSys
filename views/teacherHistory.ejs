@@ -45,7 +45,7 @@
       <h2 style="text-align: center; padding-bottom: 0px">Student Attendance</h2>
       <hr />
       <div class="row" style="padding-left: 15px; padding-right: 15px">
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style = "width: 100%; overflow-x:auto;">
           <div style = "text-align: right; margin-bottom: 2%; margin-right: 2%;">
           </div>
     <h6 style = "text-align: right; font-style: italic;"> Last updated on <%= matchingCourse.course_last_updated.substring(0,10)%> at <%= matchingCourse.course_last_updated.substring(11)%> </h6>
@@ -54,11 +54,11 @@
             <thead>
                 <tr>
                     <th scope="col" style="text-align: left; width : 10%">Student Name</th>
-                    <th scope="col" style="text-align: left; width : 7%">Student USN</th>
+                    <th scope="col" style="text-align: left; width : 7%;">Student USN</th>
                     <% const lastDates = matchingCourse.course_dates; %>
                     <% lastDates.forEach(date => { %>
-                        <th scope="col" style="text-align: left; width : 5%">
-                            <%= date %>
+                        <th scope="col" style="text-align: left; width : 5%; font-size: small;">
+                            <%= date.substring(0,10) %>
                         </th>
                     <% }); %>
                     <th scope="col" style="text-align: left; width : 8%">Cumulative</th>

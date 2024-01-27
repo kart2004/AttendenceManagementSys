@@ -30,10 +30,12 @@
   
         if (selectedOption.value === "1") {
           select.style.borderColor = "#28a745"; // Green border for 'P'
+          select.style.backgroundColor = "#c2e2ca"; // Green border for 'P'
         } else {
           select.style.borderColor = "#dc3545"; // Red border for 'A'
+          select.style.backgroundColor = "#e5aab1"; // Red border for 'A'
         }
-    }
+    } 
     }
   </script>
 </head>
@@ -89,7 +91,7 @@
 
           last5Dates.forEach(date => {
             %>
-            <th> <%= date %> </th>
+            <th> <%= date.substring(0,10) %> </th>
             <%
           });
           %>
@@ -124,7 +126,7 @@
                   class="progress-bar progress-bar-striped bg-warning"
                   style="width: <%= studentCumulative %>; color: black;
                   background-color: <%= (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' %>
-                                !important; "
+                                !important;"
                 >
                 <%= studentCumulative %>
                 </div>
@@ -142,7 +144,7 @@
                 </select> -->
                 <% value = 1 %>
                   <select name="<%= studentAttendance[i].student_usn %>" class="customSelect" aria-label="Default select example" style=" width: 70px;
-                      border-color:green;
+                      border-color: #28a745; background-color: #c2e2ca; font-weight: bold;
                       border-width: 3.5px;
                       padding-bottom: 2px; "
                     
@@ -173,7 +175,17 @@
             <label for="attendance" style = "font-weight: 500; font-size: large;">Click here for a new class: </label>
         <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">New Session</button>
       </form> -->
-      
+      <tr style = "font-size: large;">
+        <td colspan = "8" style = "text-align: right;">
+          This attendance is for : 
+        </td>
+        <td style = "text-align: center;">
+      <input type = "radio" name = "numclass" value = "1" checked/> 1 session <br>[1 hr class]    
+        </td>
+        <td style = "text-align: center;">
+          <input type = "radio" name = "numclass" value = "2"/> 2 sessions <br>[2 hrs class]
+        </td>
+      </tr>
     </table>
     <div style = "text-align: right;">
       <button type="submit" name="Submit" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: large; font-weight: 500; ">Submit Attendance</button>

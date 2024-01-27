@@ -216,23 +216,50 @@ router.post('/updateFinalAttendance/:className/:courseTeacher', async (req, res)
         const today_time = hh+":"+mmin+":"+ss;
 
 
-        // Update attendance for all students in the course
-        matchingCourse.course_attendance.forEach(student => {
-            // Update the attendance logic here
-            if (absentUSNs.includes(student.student_usn))
-            {
-                // Student is absent
-                student.student_absent_dates.push(today_date);
-            }
-            else
-            {
-                // Student is present
-                student.student_cumulative = (student.student_cumulative || 0) + 1;
-            }
-        });
-        matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 1;
-        matchingCourse.course_dates.push(today_date);
-        matchingCourse.course_last_updated = today_date + "T" + today_time;
+        var num_classes = req.body.numclass;
+        if (num_classes == 1)
+        {
+            // Update attendance for all students in the course
+            matchingCourse.course_attendance.forEach(student => {
+                // Update the attendance logic here
+                if (absentUSNs.includes(student.student_usn))
+                {
+                    // Student is absent
+                    student.student_absent_dates.push(today_date + "T" + today_time);
+                }
+                else
+                {
+                    // Student is present
+                    student.student_cumulative = (student.student_cumulative || 0) + 1;
+                }
+            });
+            matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 1;
+            matchingCourse.course_dates.push(today_date + "T" + today_time);
+            matchingCourse.course_last_updated = today_date + "T" + today_time;
+        }
+        else if (num_classes == 2)
+        {
+            // Update attendance for all students in the course
+            matchingCourse.course_attendance.forEach(student => {
+                // Update the attendance logic here
+                if (absentUSNs.includes(student.student_usn))
+                {
+                    // Student is absent
+                    student.student_absent_dates.push(today_date + "T" + today_time);
+                    student.student_absent_dates.push(today_date + "T" + today_time);
+                }
+                else
+                {
+                    // Student is present
+                    student.student_cumulative = (student.student_cumulative || 0) + 2;
+                }
+            });
+            matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 2;
+            matchingCourse.course_dates.push(today_date + "T" + today_time);
+            matchingCourse.course_dates.push(today_date + "T" + today_time);
+            matchingCourse.course_last_updated = today_date + "T" + today_time;
+        }
+
 
         console.log(`course_last_updated s ${matchingCourse.course_last_updated} `);
         // Save the updated class back to the database

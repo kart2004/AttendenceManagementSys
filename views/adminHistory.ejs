@@ -68,7 +68,7 @@
         
                     last5Dates.forEach(date => {
                     %>
-                    <th scope="col" style="text-align: left; width : 5%"> <%= date %> </th>
+                    <th scope="col" style="text-align: left; width : 5%; font-size: small;"> <%= date %> </th>
                     <%
                      });
                     %>
@@ -87,8 +87,8 @@
                     <% const studentCumulative = (attendance.student_cumulative / courseCumulative * 100).toFixed(2) + '%'; %>
 
                     <tr>
-                        <td><%= studentName %></td>
-                        <td><%= studentUSN %></td>
+                        <td style = "text-align: left;"><%= studentName %></td>
+                        <td style = "text-align: left;"><%= studentUSN %></td>
                         <%
                           last5Dates.forEach(date => {
                               const isAbsent = attendance.student_absent_dates.includes(date);

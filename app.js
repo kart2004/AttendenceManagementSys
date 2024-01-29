@@ -30,6 +30,9 @@ app.use('/login', loginRoutes);
 const registerRoutes = require('./Routes/Register.Routes');
 app.use('/register', registerRoutes);
 
+const registerAutRoutes = require('./Routes/RegisterAut.Routes');
+app.use('/registerAuth', registerAutRoutes);
+
 const teacherRoutes = require('./Routes/Teacher.Routes');
 app.use('/teacher', teacherRoutes);
 

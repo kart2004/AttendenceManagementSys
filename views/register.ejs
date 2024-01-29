@@ -124,9 +124,9 @@
       <br>
       <br>
 
-      <button type="button" id="verify-code-button" class="login-button">Verify Code</button><br>
+      <button type="button" id="verify-code-button" class="login-button">Verify Code (OTP)</button><br>
       <br>
-      <button type="button" id="authenticate-button" class="login-button" style="display: none;">Authenticate</button>
+      <button type="button" id="authenticate-button" class="login-button" style="display: none;">Authenticate Code</button>
 
       <div class="form-group" id="new-password-group" style="display:none;">
         <label for="new_password">New Password:</label>
@@ -139,8 +139,11 @@
         <div class="tooltip" id="tooltip-confirm-password">Verify using auth code</div>
       </div><br>
       <br>
-      
-      <input type="submit" value="Submit" name="submit" class="login-button" style="width: 23%;"/>
+      <div class="form-group" id="submit-group" style="display:none;">
+        <!-- <label for="confirm_password">Confirm Password:</label> -->
+        <input type="submit" value="Submit" name="submit" class="login-button" style="width: 23%;"/>
+        <div class="tooltip" id="tooltip-submit">Verify using auth code</div>
+      </div><br>
     </form>
   </div>
 

@@ -32,8 +32,11 @@ function authenticate() {
 
   if (userEnteredCode == otp_val) {
     // If the entered code matches the generated code
+    document.getElementById('verify-code-button').style.display = 'none';
+    document.getElementById('authenticate-button').style.display = 'none';
     document.getElementById('new-password-group').style.display = 'block';
     document.getElementById('confirm-password-group').style.display = 'block';
+    document.getElementById('submit-group').style.display = 'block';
   } else {
     alert("Verification code is incorrect");
   }

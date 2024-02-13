@@ -68,7 +68,7 @@ const operation = retry.operation({
 });
 
 router.post('/verify', async (req, res) => {
-    const { role, username, password, new_password, confirm_password } = req.body;
+    const { role, username, new_password, confirm_password } = req.body;
     console.log("IN verify");
 
     if (new_password !== confirm_password) {
@@ -85,7 +85,7 @@ router.post('/verify', async (req, res) => {
                 if (role=='teacher'){
                 const collection = db.collection('teacher');
                 const result = await collection.updateOne(
-                    { teacher_email: username, teacher_password: password },
+                    { teacher_email: username},
                     { $set: { teacher_password: new_password, teacher_isVerified: true } }
                 );
                 if (result.modifiedCount > 0) {
@@ -98,7 +98,7 @@ router.post('/verify', async (req, res) => {
             }   if (role=='student'){
                 const collection = db.collection('student');
                 const result = await collection.updateOne(
-                    { student_email: username, student_password: password },
+                    { student_email: username },
                     { $set: { student_password: new_password, student_isVerified: true } }
                 );
                 if (result.modifiedCount > 0) {
@@ -111,7 +111,7 @@ router.post('/verify', async (req, res) => {
             }   if (role=='admin'){
                 const collection = db.collection('admin');
                 const result = await collection.updateOne(
-                    { admin_email: username, admin_password: password },
+                    { admin_email: username },
                     { $set: { admin_password: new_password, admin_isVerified: true } }
                 );
                 if (result.modifiedCount > 0) {

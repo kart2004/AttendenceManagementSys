@@ -56,11 +56,36 @@
                     <th scope="col" style="text-align: left; width : 10%">Student Name</th>
                     <th scope="col" style="text-align: left; width : 7%;">Student USN</th>
                     <% const lastDates = matchingCourse.course_dates; %>
-                    <% lastDates.forEach(date => { %>
+                    
+                    <!-- <% lastDates.forEach(date => { %>
                         <th scope="col" style="text-align: left; width : 5%; font-size: small;">
                             <%= date.substring(0,10) %>
                         </th>
-                    <% }); %>
+                    <% }); %> -->
+
+                    <% for (let i = 0; i < lastDates.length - 1; i++) { %>
+                      <%  const date = lastDates[i].substring(0,10); %>
+                      <% const prev = parseInt(lastDates[i].substring(0,2)); %>
+                      <% const next = parseInt(lastDates[i + 1].substring(0,2)); %>
+                      <th scope="col" style="text-align: left; width : 5%; font-size: small;">
+                        <%= date %>
+                      </th>
+                          <% if (next - prev === 3) { %>
+                          <th  scope="col" style="text-align: left; width : 4%; font-size: smaller;" class = "holid">
+                            <%= prev+1%>
+                            <%=date.substring(2,5) %>
+                            SAT
+                          </th>
+                          <th  scope="col" style="text-align: left; width : 4%; font-size: smaller;" class = "holid">
+                            <%= prev+2%>
+                            <%=date.substring(2,5) %>
+                            SUN</th>
+                            <% } %>
+                    <% } %>
+
+                    <th scope="col" style="text-align: left; width : 5%; font-size: small;">
+                    <%= lastDates[lastDates.length - 1].substring(0,10) %>
+                    </th>
                     <th scope="col" style="text-align: left; width : 8%">Cumulative</th>
                     <th scope="col" style="text-align: left; width : 8%">Cumulative</th>
                 </tr>
@@ -71,7 +96,8 @@
             <tr>
               <td style = "text-align: left;"><%= studentAttendance[i].student_name %></td>
               <td style = "text-align: left;"><%= studentAttendance[i].student_usn %></td>
-              <%
+              
+              <!-- <%
                 const last5Dates = matchingCourse.course_dates;
                 last5Dates.forEach(date => {
                     const isAbsent = studentAttendance[i].student_absent_dates.includes(date);
@@ -81,7 +107,32 @@
                     </td>
                 <%
                 });
-                %>
+              %> -->
+              
+              <% for (let st = 0; st < lastDates.length - 1; st++) { %>
+                <%  const date = lastDates[st].substring(0,10); 
+                const isAbsent = studentAttendance[i].student_absent_dates.includes(lastDates[st]);
+                 %>
+                <% const prev = parseInt(lastDates[st].substring(0,2)); %>
+                <% const next = parseInt(lastDates[st + 1].substring(0,2)); %>
+                <td>
+                  <img src="<%= isAbsent ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCdWRLavfLdnhByEU-0wI6qrLtWO_4Js6yCl90axpqSO8kslq17SqW5oHQCcpcOx-BQn0&usqp=CAU' : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEVDoEf///8xmjY4nD2kzaaoz6pAn0TZ6dotmTI7nT8ymjfY6tk2nDvw9vBztXUqmDBIo0z6/fqFvYfi7+Ov07DG38dOpVL2+va62buOwpCayJxZql3B3cJNpVHr9OvL4syJv4t8uX5psGxdq2BqsW2dyp8YlCBci+g9AAAKuUlEQVR4nO2d14KbOhCGjbBlBKxxb7hhr/P+j3jAGzCGEUUzApGz/01ykyzfqk3TaGT96xr1/QHa9Us4fP0SDl+/hARaXLzN+nib3cO57fu+zUfz8B7djvvr9Guh/8drJdx568P31neY69uCxxq9lPxNCNt3mcPD2XM/1cqpjXC6XvKA+SLFkohz22fB9rZf6foQLYSr9YwncJVsH5zCZ/Nof9HxMeSEi81h5PjN4fKUwfZ4JZ+xxISbyHZbjF2J0mZieaX9JEpC7xbjKdOlEkwcPMKvIiP8mswZHi+FnI+/qD6MiHB1U1p7UnHbiYgGkoTw+u1QDd9bgoUnio8jIDyFjHL43uLsvDeAcD9y9fC9GF2OZkQSbrYa+X4Yz5seCacPTfPzg5GFqD0HQbhbOvr5XoxOhDg71AnXPv3+KZNgk84Jp6HbGV8iN5x2S3jsaIK+xZ1jh4Srrd8xXyJ/q+RDqhBOOh/AH3FHZTW2J9zdu12Bebn3nX5Cj3e3hZYlRGvvsS3hOOhnhqbiwVgvYcR65UvEIo2EX1u7b75Y9raVhdOG0LP7naGpuN3m9G9BeOp5Cb7FnRb7TXPCSdA3WE5Bc7exMeGx/z0mL2dNTXgwCzBGfNISHvqzY2RiDS3xZoTGjWAidqAjNBKw6Sg2IXyaCRivxSYWXAPCtdM3iVROg0OjnnBj0jlYVFB/9NcSeiYDxh5jrd9fR3gxxBaVifM6n7iGcDE3GzD2iUMc4XefDn0z2UsM4dE8U6asmmhxJaHR2+hbQWVeo4rwMoQRHCVVHFW7TRVhaPouk0p8qxEe+whsq4lVeItyQsOP+k8x+cEvJxwNZY4m4o/2hDcTAofN5UrdDBmhZ65DAYvJyv5khOchzdFE0nkqIRwPZx9NxSS+Ikx4GdocTWTDhZsw4cx8g7ssG45MgYRX1cAMt9uprka6nRzwUAQJt4o/l8/Wk+Yaj5/L+1Y4LpWTzUHjDSLcq1rctkKefXG5ju8BQeVtLAdyMiBCZWvGbpufzbSJfIL6VA75+wDhWtlpUie0rN36jC8CZECVH0Cobq5hCGOdzliHlG+bEK7VD3skoWVNsLWOwCCWCRE+BZrQuiCLdQDbrUSovJGSEKIzsawUBC8RYkxuCkJrj/K8+b2OUNmcISO0NqhRLBk2RcIIc/TSEOJGURQDxAXCL9Tvj4jQGmO2G1YILRYIJyi/kIrQuiM2A78QdysQ4lx7MsILYioVT/1PQg+3VZMRWkdEHIx92t+fhDeciU9HuECsFvHpCX8SIqMzdITWEzGIQk64QVq+hISYlfhp13wQog5DKeHqPispWh4m18oy0Zn6nvd5JOYJF1hHGyacBrwkIYTtOuFEnhY7IVYMlxFese6ZhFA64bgfSMuadgjD5mOa5gkPmsawakn5W1k0HpG9/NhN84ToIIICYTyOEkTEkcjnMOEKHehWIRzxM0yI2did3G8tR4gIX/yVEuHIh2thMZkFP5fDyBEi9ue/UiOUJBx2iF1BRBDhAh+vVCR04VvpqpH3WDw3cO+/1n5IvRQJS07rjzAuVM7TfxPu8SlDRUIoymnhLKzcQnwTLvGpA0XCUQASYo5ncQMICaoQVQkd8EjEuBe5aZERLgjKZ1QJGXiPaYypBnlPi4wQ6d6/REs4wRC+S4gyQoKNhpoQ80XvrSYjPBLkKA0aQzszlDLCb4JUs/JOAybgUetQzEqECAsik/JpAZptmHhbLh2cEi4oqmVVT3zYu8Ad0JmxmxLiXaeRutV2g/4Z0hNw0ihQSoiOYCSitbxxJcpZXDglxAR+Mql6TyCghfsWN813p4SorTn7VEoPGJcGeydoUkLUxpVKLYoxh/4RPoeS/t5SQgLPQpEQPgzRQZUs3pYS4kMYIyVCHshaeSF/51kgIyV89EPoyrvqIJdNVsaXEpJUPbcj5Daz5fcksAd0VlmTEuL+u7+SEP5hgBzxOFbdV8Ju7pkPnBKS3D2ACXdeWdPVrqbZLPZKUhZuS/8kqVwnzB9O0VZkmoAylRCbynxngg0lJLgs4BcINa5DFeGHMLN2U0KSYnIyQoo7ScV1SHJTjYyQ4HQu7aUkt9KpCCOCNZMFDlJCkhuxRIQkzXCyQE1KSBFqIyKk6ddUsksJNi8iwhtNr5iSb4GsaPsRAeElJLoXWPIPNfr4bbQmay1d8vHxZQojPOH1QdfjoBSnwRbtvYQj3JD2zi7F2ryeCa8Hn7b3eSleSnIvVo1wMV1HguzliFSlmPdC306z+IJ0WU29zWl9jObJezsEP7wgUcxbaMw9eX8cSIy5rp+8koT/uYDKuSeScKJqdk2D3lVR7xwwwTQ1iBDIAfeZx9cgII9P8R0GEQK1GH3W02gQUE9D4VebQwjVRFF4F+YQ5iq9TahN1CD/BBAS1CqYQwjWlxKE24whzOeV83Xe6IVoDCFc591brb4GSWr1e7pvoUNBLrOcvzODjgqbQii7M9PLvSctkt57QnUbSGQKofTumvXPjGH+x3dwh7RzwvxZUSDEFigaQuh+FCF93uVG+vmGEH7WOnZwH79rwsr7+Fp6KnRNWNlTQUtfjI4Jq/tiaOlt0jFhTW+TL5RtagRhTX8aHT2GuiUsFf4XCVF7jQmETvGGUanXF6aU1gDCcsO2EiGm05YBhA36tWGSUP0TAleKy4SIpnv9E7rldslA70v1jF7vhNDdDYBQfRB7J2TADSqoB61yvKZvQvBiP0R4Uv0kuI9wd4Tgw49gL2jVQkW4FzQ6wNX4x4ON50FC5RJdsJ93Z93PwVbQkp7sJJWKXUvSQAQmxLkYPanoVFQSDvFtBFdyh0r2vgVFAVGnAruVVxEO7o0S2UVN+Tszh2HNU1/a2k7+VtCg3mGRztEqQvztsQ4lnaNVhLh+xd3KrXh2ooKQ5m5wFxLy96yqCb8G8qiV+tt51nUYT6+pv3/4P3jDchjvkEbVCDWE5r8lK2nY15jQuhA8cKNTXFT2W25AaLqBWgritye0TiZvqNK+IW0IrYmpj8dTva1OdalTg5wmt5CaEFpLM49FJvWYWhOaicjg1wDVCE1EbAjYlJDq/jGdnEZTtAWhdTALsdEm047QGpt0LgYVz1QrE8ZHvykGHHfqD3oVQsszxEYVvNZUUyS0LnMTnCk/rHLpcYTWYtb/qcHgBAwRYWzB9exq8KDta65tCa0NZVuA1hK8MiZDQkjXm0NB7N5qCSoSxjO1p2ODOwrvDSsRWtN5H8Poy7tIkhPGNpzT9TByBreq1UVoeeduh9F9KA0ggjC2U8mbdcglWHM7lI7Q+oo6mqrcWdaFDPUQxlM17OBw5M6jjRlKSxj7GyPavjllPraFSrm6I7SstdDIyNkZ7tfeJaFl7QmefZfwPVr4gRoJ47kaathXhXNHzs8fkRDGe86SkbrH3HdvqgdgQUSE8dmxnpMNpGDhur2JLREZYSzvZhNAClccUMdDQZSEsa5LzhC9rXj8K4pIVt9bxIRW0luOO74CJRd+sD0S41k6CGOt9tGoFWVM54yivexJUpS0ECZanQ5hwHybV3NybvssCA8nop2zLG2EL61Oz9nWd5jrC/F6B/gvVfIisO27zPG3s6c+uJf0Er60uHib/fM2e4TnZDrGk/cc3meH5/7qXWqa61OoA8Ke9Us4fP0SDl+/hMPXf3YwqU9g6PFvAAAAAElFTkSuQmCC' %>" alt="<%= isAbsent ? 'Absent' : 'Present' %>" style="height: 20px; width: 20px">
+              </td>
+                    <% if (next - prev === 3) { %>
+                      <td> 
+                        <img src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/MinusCircle-512.png" style="height: 20px; width: 20px">
+                      </td>
+                      <td> 
+                        <img src = "https://cdn3.iconfinder.com/data/icons/ui-essential-elements-buttons/110/MinusCircle-512.png" style="height: 20px; width: 20px">
+                      </td>
+                      <% } %>
+              <% } %>
+              
+              <% const isAbsent = studentAttendance[i].student_absent_dates.includes(lastDates[lastDates.length - 1]); %>
+              <td>
+                <img src="<%= isAbsent ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCdWRLavfLdnhByEU-0wI6qrLtWO_4Js6yCl90axpqSO8kslq17SqW5oHQCcpcOx-BQn0&usqp=CAU' : 'data:image/png;base64,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' %>" alt="<%= isAbsent ? 'Absent' : 'Present' %>" style="height: 20px; width: 20px">
+            </td>
+                
                 <td><div
                   class="progress"
                   role="progressbar"

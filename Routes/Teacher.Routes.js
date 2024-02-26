@@ -119,6 +119,24 @@ router.post('/cie/storeval/:className/:courseTeacher', async (req, res) => {
         const usnData = req.body;
         console.log(usnData);
 
+        matchingCourse.course_attendance.forEach(student => {
+                for (let k = 0; k < 8; k++)
+                {
+                    // console.log(usnData['' + student.student_usn + '' + k]);
+                    student.student_marks[k] = usnData['' + student.student_usn + '' + k];
+                }
+                // student.student_absent_dates.push(today_date + "T" + today_time);
+            });
+            // matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 1;
+            // matchingCourse.course_dates.push(today_date + "T" + today_time);
+        
+            // Save the updated class back to the database
+        await usersCollection1.updateOne(
+            { class_name: classId, 'class_courses.course_teacher': courseTeacher },
+            { $set: { 'class_courses.$[course].course_attendance': matchingCourse.course_attendance } },
+            { arrayFilters: [{ 'course.course_teacher': courseTeacher }] }
+        );
+
         // // Extract USNs with value '0'
         // const absentUSNs = Object.entries(usnData)
         //     .filter(([usn, value]) => value === '0')

@@ -112,12 +112,79 @@ router.get('/sheet', async (req, res) => {
 });
 
 router.get('/cie', async (req, res) => {
-    
-    console.error('Authentication failed: Currently unavailable, Can view attendance');
-    res.status(401).json({ message: 'Currently unavailable, Can view attendance.' });
-       
+    const adminName = req.query.admin;
+    const classId = req.query.class_name;
+
+    try {
+        const usersCollection1 = db.collection('classes');
+        const selectedClass = await usersCollection1.findOne({ class_name: classId });
+        console.log({ class_name: classId });
+
+        if (!selectedClass) {
+            return res.status(404).json({ message: 'Class not found.' });
+        }
+
+        const usersCollection2 = db.collection('admin');
+        const admin = await usersCollection2.findOne({ admin_id: adminName });
+
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found.' });
+        }
+
+        // Render the attendance page with the selected class data
+        res.render('adminCieClass', {
+            admin,
+            classId,
+            selectedClass
+            // Pass other necessary data from the database
+        });
+    } catch (error) {
+        console.error('Error fetching class details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
 });
 
+router.get('/ciesheet', async (req, res) => {
+    const adminName = req.query.admin;
+    const classId = req.query.class_name;
+    const courseCode = req.query.course_code;
+
+    try {
+        const usersCollection1 = db.collection('classes');
+        const selectedClass = await usersCollection1.findOne({ class_name: classId });
+        console.log({ class_name: classId });
+
+        if (!selectedClass) {
+            return res.status(404).json({ message: 'Class not found.' });
+        }
+
+        const selectedCourse = selectedClass.class_courses.find(course => course.course_code === courseCode);
+
+        if (!selectedCourse) {
+            return res.status(404).json({ message: 'Course not found in the class.' });
+        } 
+        const usersCollection2 = db.collection('admin');
+        const admin = await usersCollection2.findOne({ admin_id: adminName });
+
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found.' });
+        }
+
+        // Render the attendance page with the selected class data
+        res.render('adminCieClassNew', {
+            admin,
+            classId,
+            selectedClass,
+            selectedCourse
+            // Pass other necessary data from the database
+        });
+    } catch (error) {
+        console.error('Error fetching class details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+});
 router.get('/report', async (req, res) => {
     
     console.error('Authentication failed: Currently unavailable, Can view attendance');

@@ -49,6 +49,10 @@ router.get('/need/', async (req, res) => {
             console.log(`Redirecting to /student?student_id=${studentId}`);
             res.redirect(`/student?student_id=${studentId}`);
         }
+        else if (needVal == "cie"){
+            console.log(`Redirecting to /student/cie?student_id=${studentId}`);
+            res.redirect(`/student/cie?student_id=${studentId}`);
+        }
         else {
             console.error('Authentication failed: Currently unavailable, Can view attendance');
             res.status(401).json({ message: 'Currently unavailable, Can view attendance.' });

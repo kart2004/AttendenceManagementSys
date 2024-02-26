@@ -129,7 +129,7 @@
               <h5 class="card-title"><%= classItem.class_name %></h5>
               <p class="card-text">Class details</p>
               <a href="/attendance/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>" class="btn btn-outline-success" style = "margin: 3px;">Attendance</a>
-              <a href="http://localhost:4000/teacher/cie" class="btn btn-outline-success" style = "margin: 3px;">CIE</a>
+              <a href="/teacher/cie/<%= classItem.class_name %>/<%= teacher.teacher_fullName %>" class="btn btn-outline-success" style = "margin: 3px;">CIE</a>
               <a href="http://localhost:4000/teacher/report" class="btn btn-outline-success" style = "margin: 3px;">Report</a>
             </div>
           </div>

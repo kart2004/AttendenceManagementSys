@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      th, td {
+        padding-right: 2.5% !important;
+        vertical-align: top;
+      }
+    </style>
+  </head>
+  <body class="p-3 mb-2 bg-info-subtle text-emphasis-info">
+
+    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+        Attendance Management Sytem
+      </a>
+    </nav>
+
+    <div class="row" style="padding-left:10px;padding-top:65px">
+        <div class="col-3" style="padding-right: 15px">
+          <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 18rem">
+            <div class="card" >
+              <img
+                src="https://img.freepik.com/premium-vector/boy-student-graduate-cap-icon-sign-logo-color-isolated-image-circle-isolated-vector-illustration_619989-1110.jpg"
+                class="card-img-top"
+                style="width: 15rem;"
+              />
+              <div class="card-body">
+                <h5 class="card-title" style="padding-top: 5px">
+                  Student Name : <%= student.student_fullName %>
+                </h5>
+                <p class="card-text"></p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>USN:</b> <%= student.student_id %></li>
+                <li class="list-group-item"><b>Student email:</b> <%= student.student_email %></li>
+                <li class="list-group-item"><b>Student Department:</b> <%= student.student_dept %></li>
+                <li class="list-group-item"><b>Student Class:</b> <%= student.student_class_name %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-9" style="padding-left: 0px">
+          <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px; overflow-x: auto; max-width: 100%;">
+              <table class="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
+                  <thead>
+                      <tr>
+                          <th scope="col" style="width:10%">Course</th>
+                          <th scope="col" style="width:5%; ">Course Code</th>
+                          <th scope="col" style="width:7%; text-align: center;">Professor</th>
+                          <th scope="col" style = "text-align: left; width: 3%;">  Quiz 1</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Test 1</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Quiz 2</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Test 2</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Quiz 3</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Test 3</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  Lab</th>
+                      <th scope="col" style = "text-align: left; width: 3%;">  EL</th>
+                      <th scope="col" style = "text-align: left; width: 3%;"> Avg Quiz</th>
+                      <th scope="col" style = "text-align: left; width: 3%;"> Avg Test</th>
+                      <th scope="col" style = "vertical-align: middle; width : 4%;">Attendance</th>
+                          <!-- <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th> -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <% for (const course of selectedClass.class_courses) { %>
+                          <% const studentAttendance = course.course_attendance.find(attendance => attendance.student_name === student.student_fullName); %>
+                            <% const studentMarks = studentAttendance.student_marks; %>
+                          <tr>
+                              <td style="max-width: 100px;"><%= course.course_name %></td>
+                              <td style="max-width: 100px;"><%= course.course_code %></td>
+                              <td style="max-width: 100px;"><%= course.course_teacher %></td>
+                              <% studentMarks.forEach(mark => { %>
+                                <td>
+                                  <% if (mark === 0) { %>
+                                      -
+                                  <%} else {%>
+                                    <%= mark %>
+                                    <% } %>
+                                </td>
+                                <% }); %>
+                          <!-- Avg quiz -->
+                          <td>
+                            <%= ((studentMarks[0] + studentMarks[2] + studentMarks[4])/3.0).toFixed(2) %>
+                          </td>
+                          <!-- Avg test -->
+                          <td>
+                            <%= ((studentMarks[1] + studentMarks[3] + studentMarks[5])/3.0).toFixed(2) %>
+                          </td>
+
+
+                              <td style = "text-align: center;"><%= studentAttendance ?(studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) + '%' + '    [ ' + studentAttendance.student_cumulative + '/' + course.course_cumulative + ' ]' : 'N/A' %></td>
+                              
+                              <!-- <td>
+                                  <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="<%= studentAttendance ? studentAttendance.student_cumulative : 0 %>" aria-valuemin="0" aria-valuemax="<%= course.course_cumulative %>">
+                                    <div class="progress-bar progress-bar-striped bg-info" style="background-color: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' : 'black' %>
+                                     !important; 
+                                     width: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2): 0 %>%;"></div>
+                                  </div>
+                              </td> -->
+                          </tr>
+                      <% } %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+    
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

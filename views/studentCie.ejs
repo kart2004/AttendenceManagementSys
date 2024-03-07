@@ -53,7 +53,11 @@
 
         <div class="col-9" style="padding-left: 0px">
           <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px; overflow-x: auto; max-width: 100%;">
-              <table class="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
+            <button onclick="exportTableToCSV('Student_CIE.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
+            <button id="generatePDFButton" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
+              Generate PDF
+          </button>  
+            <table class="table" id = "stud_marks" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
                   <thead>
                       <tr>
                           <th scope="col" style="width:10%">Course</th>
@@ -92,11 +96,11 @@
                                 <% }); %>
                           <!-- Avg quiz -->
                           <td>
-                            <%= ((studentMarks[0] + studentMarks[2] + studentMarks[4])/3.0).toFixed(2) %>
+                            <%= ((parseInt(studentMarks[0]) + parseInt(studentMarks[2]) + parseInt(studentMarks[4]))/3.0).toFixed(2) %>
                           </td>
                           <!-- Avg test -->
                           <td>
-                            <%= ((studentMarks[1] + studentMarks[3] + studentMarks[5])/3.0).toFixed(2) %>
+                            <%= ((parseInt(studentMarks[1]) + parseInt(studentMarks[3]) + parseInt(studentMarks[5]))/3.0).toFixed(2) %>
                           </td>
 
 
@@ -133,5 +137,76 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+
+          // CSV file
+          csvFile = new Blob([csv], { type: "text/csv" });
+
+          // Download link
+          downloadLink = document.createElement("a");
+
+          // File name
+          downloadLink.download = filename;
+
+          // Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+
+          // Hide download link
+          downloadLink.style.display = "none";
+
+          // Add the link to DOM
+          document.body.appendChild(downloadLink);
+
+          // Click download link
+          downloadLink.click();
+      }
+
+      function exportTableToCSV(filename) {
+          var csv = [];
+          var rows = document.querySelectorAll("table tr");
+
+          for (var i = 0; i < rows.length; i++) {
+              var row = [],
+                  cols = rows[i].querySelectorAll("td, th");
+
+              for (var j = 0; j < cols.length; j++) {
+                  row.push(cols[j].innerText);
+              }
+
+              csv.push(row.join(","));
+          }
+
+          // Download CSV file
+          downloadCSV(csv.join("\n"), filename);
+      }
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+
+  <script>
+    // Update your existing handlePDFButtonClick function
+    function handlePDFButtonClick() {
+        // Get the HTML content of the document
+        // const content = document.documentElement;
+        const content = document.getElementById("stud_marks");
+
+        // Options for html2pdf.js (modify as needed)
+        const options = {
+            margin: 7,
+            filename: 'StudentCIE.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        };
+
+        // Use html2pdf.js to generate PDF
+        html2pdf(content, options);
+    }
+
+    // Add an event listener to the button
+    document.getElementById('generatePDFButton').addEventListener('click', handlePDFButtonClick);
+</script>
   </body>
 </html>

@@ -1,158 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Class</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
     />
-  </head>
-  <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger" style = "background-color: lightpink;">
-    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
-      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
-        Attendance Management Sytem
-      </a>
+</head>
+
+<body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger" style="background-color: lightpink;">
+    <nav class="navbar fixed-top bg-body-tertiary" style="padding: 0px;">
+        <a class="navbar-brand" href="#"
+            style="font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            <img
+                src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo"
+                style="padding-left: 10px; padding-right: 15px;" height="50"
+                class="d-inline-block align-top" alt="">
+            Attendance Management Sytem
+        </a>
     </nav>
-    
+
     <div class="row" style="padding-top: 60px; padding-left: 15px; padding-right: 15px">
-      <h2 style = "font-variant: small-caps; padding-bottom: 1.6%; text-decoration:underline;"><%= classId %> Details</h2>
-      <div class="col-3" style="padding-right: 15px">
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded" >
-          <ul class="list-group list-group-flush">
-
-          <li style="list-style-type: none;"><b>Admin Name: </b><%= admin.admin_fullName %></li>
-          <hr />
-          <li style="list-style-type: none;"><b>Department: </b><%= admin.admin_dept %></li>
-          <hr />
-          <li style="list-style-type: none;"><b>Class: </b><%= classId %></li>
-          </ul>
+        <h2 style="font-variant: small-caps; padding-bottom: 1.6%; text-decoration:underline;">0<1%= classId %> Details</h2>
+        <div class="col-3" style="padding-right: 15px">
+            <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                <ul class="list-group list-group-flush">
+                    <li style="list-style-type: none;"><b>Admin Name: </b><%= admin.admin_fullName %></li>
+                    <hr />
+                    <li style="list-style-type: none;"><b>Department: </b><%= admin.admin_dept %></li>
+                    <hr />
+                    <li style="list-style-type: none;"><b>Class: </b><%= classId %></li>
+                </ul>
+            </div>
         </div>
-        </div>
 
-      <div class="col-8" style="padding-right: 15px">
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-
-          <li style="list-style-type: none; text-align: center;">
-            <b>Courses: </b> <br>
-            <% for (const course of selectedClass.class_courses) { %>
-                <a 
-                  href="/admin/ciesheet?admin=<%= admin.admin_id %>&class_name=<%= selectedClass.class_name %>&course_code=<%= course.course_code %>"
-                  class="btn btn-danger" 
-                  style="margin: 10px 20px; padding: 10px; width: 300px; background-color:darksalmon ; color:black; font-weight: 600;"
-              >
-                  <%= course.course_name %>
-                </a>
-            <% } %>
-          </li>
+        <div class="col-8" style="padding-right: 15px">
+            <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                <li style="list-style-type: none; text-align: center;">
+                    <b>Courses: </b> <br>
+                    <% for (const course of selectedClass.class_courses) { %>
+                        <a
+                        href="/admin/ciesheet?admin=<%= admin.admin_id %>&class_name=<%= selectedClass.class_name %>&course_code=<%= course.course_code %>"
+                        class="btn btn-danger"
+                        style="margin: 10px 20px; padding: 10px; width: 300px; background-color:darksalmon ; color:black; font-weight: 600;">
+                        <%= course.course_name %>
+                    </a>
+                    <% } %>
+                </li>
+            </div>
         </div>
-      </div>
     </div>
     <h2 style="text-align: center; padding-bottom: 0px">Student Marks</h2>
-    <pre><h6 style="text-align: center; padding-bottom: 0px"><b>Course name :</b> <%= selectedCourse.course_name %>        <b>Course code :</b> <%= selectedCourse.course_code %>         <b>Course teacher :</b> <%= selectedCourse.course_teacher %></h6></pre>
+    <pre>
+        <h6 style="text-align: center; padding-bottom: 0px"><b>Course name :</b> <%= selectedCourse.course_name %>
+            <b>Course code :</b> <%= selectedCourse.course_code %> <b>Course teacher :</b> <%= selectedCourse.course_teacher %></h6>
+    </pre>
     <hr />
     <div class="row" style="padding-left: 15px; padding-left: 10%">
-      <div class="col-11" >
-
-      <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <!-- <form action="http://localhost:4000/admin/history/<%= admin.admin_id %>/<%= selectedClass.class_name %>/<%= selectedCourse.course_code %>" method="post">
-          <label for="history" style = "font-weight: 500; font-size: large;">Click here for attendance history  :    </label>
-          <button type="submit" name="history" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Attendance History</button>
-        </form> -->
-          <table class="table" style="table-layout:auto; width: max-content; width: 100%; " cellspacing = "10">
-              <thead>
-                  <tr>
-                      <th scope="col" style = "vertical-align: middle; text-align: left; width: 10%">Student Name</th>
-                      <th scope="col" style = "vertical-align: middle; text-align: left; width: 5%">Student USN</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Quiz 1</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Test 1</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Quiz 2</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Test 2</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Quiz 3</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Test 3</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  Lab</th>
-                      <th scope="col" style = "text-align: left; width: 3%;">  EL</th>
-                      <th scope="col" style = "text-align: left; width: 3%;"> Avg Quiz</th>
-                      <th scope="col" style = "text-align: left; width: 3%;"> Avg Test</th>
-                      <th scope="col" style = "vertical-align: middle; width : 4%;">Attendance</th>
-                      <!-- <th scope="col" style = "vertical-align: middle; width : 5%;">Cumulative</th> -->
-                  </tr>
-              </thead>
-              <tbody>
-                  <% selectedCourse.course_attendance.forEach(attendance => { %>
-                      <% const studentName = attendance.student_name; %>
-                      <% const studentUSN = attendance.student_usn; %>
-                      <% const courseCumulative = selectedCourse.course_cumulative; %>
-                      <% const studentCumulative = (attendance.student_cumulative / courseCumulative * 100).toFixed(2) + '%'; %>
-                      <% const studentMarks = attendance.student_marks; %>
-  
-                      <tr>
-                          <td style = "text-align: left;"><%= studentName %></td>
-                          <td style = "text-align: left;"><%= studentUSN %></td>
-                          <% studentMarks.forEach(mark => { %>
-                            <td>
-                              <% if (mark === 0) { %>
-                                  -
-                              <%} else {%>
-                                <%= mark %>
-                                <% } %>
-                            </td>
+        <div class="col-11">
+           
+            <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                <button onclick="exportTableToCSV('Admin_CIE.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
+                <button id="generatePDFButton" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
+                    Generate PDF
+                </button>
+                
+                <table id="table" class="table" style="table-layout:auto; width: max-content; width: 100%; " cellspacing="10">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="vertical-align: middle; text-align: left; width: 10%">Student Name</th>
+                            <th scope="col" style="vertical-align: middle; text-align: left; width: 5%">Student USN</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Quiz 1</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Test 1</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Quiz 2</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Test 2</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Quiz 3</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Test 3</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Lab</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> EL</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Avg Quiz</th>
+                            <th scope="col" style="text-align: left; width: 3%;"> Avg Test</th>
+                            <th scope="col" style="vertical-align: middle; width : 4%;">Attendance</th>
+                            <!-- <th scope="col" style = "vertical-align: middle; width : 5%;">Cumulative</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% selectedCourse.course_attendance.forEach(attendance => { %>
+                            <% const studentName = attendance.student_name; %>
+                            <% const studentUSN = attendance.student_usn; %>
+                            <% const courseCumulative = selectedCourse.course_cumulative; %>
+                            <% const studentCumulative = (attendance.student_cumulative / courseCumulative * 100).toFixed(2) + '%'; %>
+                            <% const studentMarks = attendance.student_marks; %>
+    
+                            <tr>
+                                <td style="text-align: left;"><%= studentName %></td>
+                                <td style="text-align: left;"><%= studentUSN %></td>
+                                <% studentMarks.forEach(mark => { %>
+                                <td>
+                                    <% if (mark === 0) { %>
+                                    -
+                                    <%} else {%>
+                                    <%= mark %>
+                                    <% } %>
+                                </td>
+                                <% }); %>
+                                <!-- Avg quiz -->
+                                <td><%= ((parseInt(studentMarks[0]) + parseInt(studentMarks[2]) + parseInt(studentMarks[4])) / 3.0).toFixed(2) %></td>
+                                <!-- Avg test -->
+                                <td><%= ((parseInt(studentMarks[1]) + parseInt(studentMarks[3]) + parseInt(studentMarks[5])) / 3.0).toFixed(2) %></td>
+                                <td style="text-align: center;"><%= studentCumulative + '      [ ' + attendance.student_cumulative + '/' + courseCumulative + ' ]'%></td>
+                                <!-- <td>
+                                    <div class="progress" role="progressbar" aria-label="Warning striped example"
+                                        aria-valuenow="<%= attendance.student_cumulative %>" aria-valuemin="0"
+                                        aria-valuemax="<%= courseCumulative %>">
+                                        <div class="progress-bar progress-bar-striped bg-warning"
+                                            style="background-color: <%= (attendance.student_cumulative / courseCumulative * 100).toFixed(2) > 65 ? '#00e600' : (attendance.student_cumulative / courseCumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' %>
+                                    !important; width: <%= studentCumulative %>; color: black;">
+                                            <%= studentCumulative %>
+                                        </div>
+                                    </div>
+                                </td> -->
+                            </tr>
                             <% }); %>
-                      <!-- Avg quiz -->
-                      <td>
-                        <%= ((studentMarks[0] + studentMarks[2] + studentMarks[4])/3.0).toFixed(2) %>
-                      </td>
-                      <!-- Avg test -->
-                      <td>
-                        <%= ((studentMarks[1] + studentMarks[3] + studentMarks[5])/3.0).toFixed(2) %>
-                      </td>
-                            <td style = "text-align: center;"><%= studentCumulative + '      [ ' + attendance.student_cumulative + '/' + courseCumulative + ' ]'%></td>
-                        <!-- <td>
-                            <div
-                              class="progress"
-                              role="progressbar"
-                              aria-label="Warning striped example"
-                              aria-valuenow="<%= attendance.student_cumulative %>"
-                              aria-valuemin="0"
-                              aria-valuemax="<%= courseCumulative %>"
-                            >
-                              <div
-                                class="progress-bar progress-bar-striped bg-warning"
-                                style="background-color: <%= (attendance.student_cumulative / courseCumulative * 100).toFixed(2) > 65 ? '#00e600' : (attendance.student_cumulative / courseCumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' %>
-                                !important; 
-                                width: <%= studentCumulative %>; color: black;"
-                              >
-                              <%= studentCumulative %>
-                              </div>
-                            </div>
-                          </td> -->
-                      </tr>
-                  <% }); %>
-              </tbody>
-          </table>
-      </div>
-      </div>
-  </div>
-  
-      
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+    <script>
+        // Function to generate PDF using html2pdf.js
+        function generatePDF() {
+    var element = document.getElementById('table');
+    var opt = {
+        margin:       1,
+        filename:     'AdminCIE.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    // New Promise-based usage:
+    html2pdf().set(opt).from(element).save();
+}
+
+
+        // Add an event listener to the "Generate PDF" button
+        document.getElementById('generatePDFButton').addEventListener('click', generatePDF);
+
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], { type: "text/csv" });
+            // Download link
+            downloadLink = document.createElement("a");
+            // File name
+            downloadLink.download = filename;
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            // Hide download link
+            downloadLink.style.display = "none";
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+            // Click download link
+            downloadLink.click();
+        }
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            for (var i = 0; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+                csv.push(row.join(","));
+            }
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>

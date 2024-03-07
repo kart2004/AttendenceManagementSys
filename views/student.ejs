@@ -1,3 +1,4 @@
+<!--STUDENT-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,17 +54,17 @@
 
         <div class="col-9" style="padding-left: 0px">
           <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px; overflow-x: auto; max-width: 100%;">
-              <table class="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
-                  <thead>
-                      <tr>
-                          <th scope="col" style="width:10%">Course</th>
-                          <th scope="col" style="width:5%; ">Course Code</th>
-                          <th scope="col" style="width:7%; text-align: center;">Professor</th>
-                          <th scope="col" colspan="6"  style="width:8%; text-align: center;">Last 5 days</th>
-                          <th scope="col" style="width:8%; text-align: center;">Cumulative</th>
-                          <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th>
-                      </tr>
-                  </thead>
+            <table class="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
+              <thead>
+                <tr>
+                    <th scope="col" style="width:10%">Course</th>
+                    <th scope="col" style="width:5%;">Course Code</th>
+                    <th scope="col" style="width:7%; text-align: center;">Professor</th>
+                    <th scope="col" colspan="6" style="width:8%; text-align: center;">Last 5 days</th>
+                    <th scope="col" style="width:8%; text-align: center;">Cumulative</th>
+                    <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th>
+                </tr>
+            </thead>
                   <tbody>
                       <% for (const course of selectedClass.class_courses) { %>
                           <% const studentAttendance = course.course_attendance.find(attendance => attendance.student_name === student.student_fullName); %>
@@ -100,11 +101,57 @@
                   <form action="http://localhost:4000/student/studentHistory/<%= student.student_id %>" method="post">
                     <label for="history" style = "font-weight: 500; font-size: large;">Click here for attendance history: </label>
                     <button type="submit" name="history" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Attendance History</button>
+                    <span style="margin-right: 10px;"></span>
+                    <button onclick="exportTableToCSV('Attendance.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
                   </form>
               </table>
           </div>
       </div>
-      
+      <script>
+        function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+  
+          // CSV file
+          csvFile = new Blob([csv], { type: "text/csv" });
+  
+          // Download link
+          downloadLink = document.createElement("a");
+  
+          // File name
+          downloadLink.download = filename;
+  
+          // Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+  
+          // Hide download link
+          downloadLink.style.display = "none";
+  
+          // Add the link to DOM
+          document.body.appendChild(downloadLink);
+  
+          // Click download link
+          downloadLink.click();
+        }
+  
+        function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [],
+                cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText.trim());
+            }
+
+            csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+    }
+      </script>
     
 
     <script

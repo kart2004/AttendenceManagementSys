@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+  <script src="https://unpkg.com/html2pdf.js"></script>
     <meta charset="UTF-8"><head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,6 +48,10 @@
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style = "width: 100%; overflow-x:auto;">
           <div style = "text-align: right; margin-bottom: 2%; margin-right: 2%;">
           </div>
+    <button onclick="exportTableToCSV('Student_Attendance.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
+    <button id="generatePDFButton" onclick="generatePDF()" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
+      Generate PDF
+  </button>
     <h6 style = "text-align: right; font-style: italic;"> Last updated on <%= matchingCourse.course_last_updated.substring(0,10)%> at <%= matchingCourse.course_last_updated.substring(11)%> </h6>
 
           <table class="table" style="width: 100%; text-align: center; table-layout: auto;">
@@ -156,8 +160,69 @@
             <% } %>
         </tbody>
     </table>
-    
-</body>
+    <script>
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], { type: "text/csv" });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+    </script>
+   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+   <script>
+       // Function to generate PDF using html2pdf.js
+       function generatePDF() {
+   var element = document.getElementById('table');
+   var opt = {
+       margin:       1,
+       filename:     'myfile.pdf',
+       image:        { type: 'jpeg', quality: 0.98 },
+       html2canvas:  { scale: 2 },
+       jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+   };
+   // New Promise-based usage:
+   html2pdf().set(opt).from(element).save();
+}
+</script>
+    </body>
 
 
 </html>

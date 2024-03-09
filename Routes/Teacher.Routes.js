@@ -164,12 +164,11 @@ router.post('/cie/storeval/:className/:courseTeacher/:constantValue', async (req
             { arrayFilters: [{ 'course.course_teacher': courseTeacher }] }
         );
 
-        /*res.render('teacherCieUpdateHome', {
+        res.render('teacherCieSheet', {
             selectedClass,
             matchingCourse,
             studentAttendance: matchingCourse.course_attendance,
-        });*/
-        res.status(200).json({ message: 'Student marks updated successfully.' });
+        });
 
     } catch (error) {
         console.error('Error updating attendance:', error);

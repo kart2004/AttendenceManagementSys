@@ -130,23 +130,6 @@
                             <%= ((parseInt(studentMarks[1]) + parseInt(studentMarks[3]) + parseInt(studentMarks[5]))/3.0).toFixed(2) %>
                         </td>
                         
-            <!-- <td><div
-                class="progress"
-                role="progressbar"
-                aria-label="Warning striped example"
-                aria-valuenow="<%= studentAttendance[i].student_cumulative %>"
-                aria-valuemin="0"
-                aria-valuemax="<%= matchingCourse.course_cumulative %>"
-              >
-                        <div
-                  class="progress-bar progress-bar-striped bg-warning"
-                  style="width: <%= studentCumulative %>; color: black;
-                  background-color: <%= (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance[i].student_cumulative / matchingCourse.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' %>
-                                !important;"
-                >
-                    <%= studentCumulative %>
-    </div>
-    </div></td> -->
 
                 <td style = "text-align: center;"><%= studentCumulative + '      [ ' + studentAttendance[i].student_cumulative + '/' + matchingCourse.course_cumulative + ' ]'%></td>
                 
@@ -157,10 +140,7 @@
             
           </tbody>
           
-          <!-- <form action="http://localhost:4000/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
-            <label for="attendance" style = "font-weight: 500; font-size: large;">Click here for a new class: </label>
-        <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">New Session</button>
-      </form> -->
+          
       
     </table>
     </div>

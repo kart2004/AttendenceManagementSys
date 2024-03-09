@@ -86,7 +86,7 @@ router.post('/cie/update/:className/:courseTeacher', async (req, res) => {
             return res.status(404).json({ message: 'Course not found.' });
         } 
 
-        res.render('teacherCieUpdateSheet', {
+        res.render('teacherCieUpdateHome', {
             selectedClass,
             matchingCourse,
             studentAttendance: matchingCourse.course_attendance
@@ -97,10 +97,41 @@ router.post('/cie/update/:className/:courseTeacher', async (req, res) => {
     }
 });
 
-router.post('/cie/storeval/:className/:courseTeacher', async (req, res) => {
+router.post('/cie/updateOption/:className/:courseTeacher/:constantValue', async (req, res) => {
     const classId = req.params.className;
     const courseTeacher = req.params.courseTeacher;
-    const newAttendance = req.body.attendance;
+    const constantValue = req.params.constantValue;
+
+    try {
+        const usersCollection1 = db.collection('classes');
+        const selectedClass = await usersCollection1.findOne({ class_name: classId });
+
+        if (!selectedClass) {
+            return res.status(404).json({ message: 'Class not found.' });
+        }
+
+        const matchingCourse = selectedClass.class_courses.find(course => course.course_teacher === courseTeacher);
+        if (!matchingCourse) {
+            return res.status(404).json({ message: 'Course not found.' });
+        } 
+
+        res.render('teacherCieUpdateSheet', {
+            selectedClass,
+            matchingCourse,
+            studentAttendance: matchingCourse.course_attendance,
+            constantValue: parseInt(constantValue)
+        });
+    } catch (error) {
+        console.error('Error updating attendance:', error);
+        return res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/cie/storeval/:className/:courseTeacher/:constantValue', async (req, res) => {
+    const classId = req.params.className;
+    const courseTeacher = req.params.courseTeacher;
+    const constantValue = req.params.constantValue;
+
 
     try {
         const usersCollection1 = db.collection('classes');
@@ -117,19 +148,15 @@ router.post('/cie/storeval/:className/:courseTeacher', async (req, res) => {
 
         // Assuming the JSON structure is available in req.body
         const usnData = req.body;
-        console.log(usnData);
-
-        matchingCourse.course_attendance.forEach(student => {
-                for (let k = 0; k < 8; k++)
-                {
-                    // console.log(usnData['' + student.student_usn + '' + k]);
-                    student.student_marks[k] = usnData['' + student.student_usn + '' + k];
-                }
-                // student.student_absent_dates.push(today_date + "T" + today_time);
-            });
-            // matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 1;
-            // matchingCourse.course_dates.push(today_date + "T" + today_time);
+        console.log('Received data:', usnData);
+        let i = 0;
         
+        matchingCourse.course_attendance.forEach(student => {
+            const newValue = req.body[`marks_${i}_${constantValue}`];
+            console.log(`Updating ${student.student_usn}: ${newValue}`);
+            student.student_marks[constantValue] = newValue; 
+            i++;
+        });
             // Save the updated class back to the database
         await usersCollection1.updateOne(
             { class_name: classId, 'class_courses.course_teacher': courseTeacher },
@@ -137,88 +164,15 @@ router.post('/cie/storeval/:className/:courseTeacher', async (req, res) => {
             { arrayFilters: [{ 'course.course_teacher': courseTeacher }] }
         );
 
-        // // Extract USNs with value '0'
-        // const absentUSNs = Object.entries(usnData)
-        //     .filter(([usn, value]) => value === '0')
-        //     .map(([usn]) => usn.trim());  // trim to remove leading/trailing whitespaces
-
-        // // Print or send the result as needed
-        // console.log('Absent USNs:', absentUSNs);
-        // var curr_date_obj = new Date();
-        // var dd = String(curr_date_obj.getDate()).padStart(2, '0');
-        // var mm = String(curr_date_obj.getMonth() + 1).padStart(2,'0');
-        // var yyyy = curr_date_obj.getFullYear();
-        // var hh = String(curr_date_obj.getHours()).padStart(2, '0');
-        // var mmin = String(curr_date_obj.getMinutes()).padStart(2, '0');
-        // var ss = String(curr_date_obj.getSeconds()).padStart(2, '0');
-        // const today_date = dd+"-"+mm+"-"+yyyy;
-        // const today_time = hh+":"+mmin+":"+ss;
-
-
-        // var num_classes = req.body.numclass;
-        // if (num_classes == 1)
-        // {
-        //     // Update attendance for all students in the course
-        //     matchingCourse.course_attendance.forEach(student => {
-        //         // Update the attendance logic here
-        //         if (absentUSNs.includes(student.student_usn))
-        //         {
-        //             // Student is absent
-        //             student.student_absent_dates.push(today_date + "T" + today_time);
-        //         }
-        //         else
-        //         {
-        //             // Student is present
-        //             student.student_cumulative = (student.student_cumulative || 0) + 1;
-        //         }
-        //     });
-        //     matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 1;
-        //     matchingCourse.course_dates.push(today_date + "T" + today_time);
-        //     matchingCourse.course_last_updated = today_date + "T" + today_time;
-        // }
-        // else if (num_classes == 2)
-        // {
-        //     // Update attendance for all students in the course
-        //     matchingCourse.course_attendance.forEach(student => {
-        //         // Update the attendance logic here
-        //         if (absentUSNs.includes(student.student_usn))
-        //         {
-        //             // Student is absent
-        //             student.student_absent_dates.push(today_date + "T" + today_time);
-        //             student.student_absent_dates.push(today_date + "T" + today_time);
-        //         }
-        //         else
-        //         {
-        //             // Student is present
-        //             student.student_cumulative = (student.student_cumulative || 0) + 2;
-        //         }
-        //     });
-        //     matchingCourse.course_cumulative = (matchingCourse.course_cumulative || 0) + 2;
-        //     matchingCourse.course_dates.push(today_date + "T" + today_time);
-        //     matchingCourse.course_dates.push(today_date + "T" + today_time);
-        //     matchingCourse.course_last_updated = today_date + "T" + today_time;
-        // }
-
-
-        // console.log(`course_last_updated s ${matchingCourse.course_last_updated} `);
-        // // Save the updated class back to the database
-        // await usersCollection1.updateOne(
-        //     { class_name: classId, 'class_courses.course_teacher': courseTeacher },
-        //     { $set: { 'class_courses.$[course].course_attendance': matchingCourse.course_attendance,
-        //     'class_courses.$[course].course_cumulative': matchingCourse.course_cumulative,
-        //     'class_courses.$[course].course_dates': matchingCourse.course_dates,
-        //     'class_courses.$[course].course_last_updated': matchingCourse.course_last_updated } },
-        //     { arrayFilters: [{ 'course.course_teacher': courseTeacher }] }
-        // );
-
-        res.render('teacherCieUpdateSheet', {
+        /*res.render('teacherCieUpdateHome', {
             selectedClass,
             matchingCourse,
-            studentAttendance: matchingCourse.course_attendance
-        });
+            studentAttendance: matchingCourse.course_attendance,
+        });*/
+        res.status(200).json({ message: 'Student marks updated successfully.' });
+
     } catch (error) {
         console.error('Error updating attendance:', error);
-        return res.status(500).send('Internal Server Error');
     }
 });
 

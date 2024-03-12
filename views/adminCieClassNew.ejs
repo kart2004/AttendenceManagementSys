@@ -28,7 +28,7 @@
     </nav>
 
     <div class="row" style="padding-top: 60px; padding-left: 15px; padding-right: 15px">
-        <h2 style="font-variant: small-caps; padding-bottom: 1.6%; text-decoration:underline;">0<1%= classId %> Details</h2>
+        <h2 style="font-variant: small-caps; padding-bottom: 1.6%; text-decoration:underline;"><%= classId %> Details</h2>
         <div class="col-3" style="padding-right: 15px">
             <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
                 <ul class="list-group list-group-flush">
@@ -146,6 +146,7 @@
         html2canvas:  { scale: 2 },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
+    // html2pdf(element);
     // New Promise-based usage:
     html2pdf().set(opt).from(element).save();
 }

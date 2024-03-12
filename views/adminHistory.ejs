@@ -62,9 +62,9 @@
 
       <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
         <button onclick="exportTableToCSV('Admin_attendance.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
-        <!-- <button id="generatePDFButton" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
+        <button id="generatePDFButton" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
           Generate PDF
-      </button> -->
+      </button>
         <table class="table" id = "admin_att" style="table-layout:auto; width: max-content; width: 100%; " cellspacing = "10">
             <thead>
                 <tr>
@@ -186,6 +186,8 @@
       // Function to generate PDF using html2pdf.js
     function generatePDF() {
     var element = document.getElementById('admin_att');
+    // var element = document.querySelectorAll("table");
+
     var opt = {
         margin:       1,
         filename:     'AdminAttendance.pdf',

@@ -45,7 +45,7 @@
     <div class="row" style="padding-left: 15px; padding-right: 15px">
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
             <div class="row justify-content-end">
-                <form action="/upload-csv" method="post" enctype="multipart/form-data">
+                <!-- <form action="/upload-csv" method="post" enctype="multipart/form-data">
                     <div class="col-auto">
                         <input type="file" name="file" accept=".csv" style="display: none;" id="csvFileInput">
                         
@@ -54,20 +54,32 @@
                         <button type="submit" name="upload" class="btn btn-primary"
                             style="display: none;">Upload</button>
                     </div>
-                </form>
+                </form> -->
                 <div class="col-auto">
+                    <div>
+
+                        <form
+                            action="http://localhost:4000/teacher/cie/import/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= constantValue %>" method="post" enctype="multipart/form-data">
+                            <div>
+                                <input type="file" name="csvFile" accept=".csv" id="csvFileInput">
+                            </div>
+                            <label for="upload" style="font-weight: 500; font-size: large;"></label>
+                            <button type="submit" name="upload" class="btn btn-info"
+                                style="margin:5px; background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Upload marks from CSV</button>
+                        </form>
+                    </div>
                     <form
-                        action="http://localhost:4000/teacher/cie/update/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>"
+                        action="http://localhost:4000/teacher/cie/update/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= constantValue %>"
                         method="post">
                         <label for="history" style="font-weight: 500; font-size: large;"></label>
                         <button type="submit" name="history" class="btn btn-info"
-                            style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Update</button>
+                            style="margin:5px; background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Update marks here</button>
                     </form>
                 </div>
             </div>
-            <h6 style="text-align: right; font-style: italic;"> Last updated on
+            <!-- <h6 style="text-align: right; font-style: italic;"> Last updated on
                 <%= matchingCourse.course_last_updated.substring(0,10)%> at <%= matchingCourse.course_last_updated.substring(11)%>
-            </h6>
+            </h6> -->
             <form
                 action="http://localhost:4000/teacher/cie/storeval/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= constantValue %>"
                 method="post">

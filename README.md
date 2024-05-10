@@ -32,4 +32,18 @@ MongoDB for the database.
 JSON Web Tokens (JWT) for user authentication.
 
 ![image](https://github.com/kart2004/AttendenceManagementSys/assets/111494403/48c1cfe6-08d0-40e6-903a-dbb1849f648b)
+
 ![image](https://github.com/kart2004/AttendenceManagementSys/assets/111494403/944987e3-3b3c-448f-b7a5-8965de55fab0)
+
+![image](https://github.com/kart2004/AttendenceManagementSys/assets/111494403/9ebaaf06-b3c7-4a97-9fe1-ab2b44af3651)
+
+![image](https://github.com/kart2004/AttendenceManagementSys/assets/111494403/dc1c24a9-d65d-4b30-abed-6871c6ad8bba)
+
+# Getting Started
+### Clone the repository:
+
+![image](https://github.com/kart2004/AttendenceManagementSys/assets/111494403/67dd06b9-dfae-4b84-b1b1-15687dc02d21)
+
+### Install dependencies for the frontend and backend:
+
+
